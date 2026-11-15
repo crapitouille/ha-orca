@@ -55,6 +55,20 @@ Chaque circuit de chauffage a une entité thermostat :
 Le thermostat propose « arrêt » et le mode réglé sur la PAC. Le mode de fonctionnement (chauffage,
 rafraîchissement, automatique) se change sur l'écran de la PAC, pas depuis Home Assistant.
 
+## Tableau de bord
+
+Le fichier [`dashboards/pompe-a-chaleur.yaml`](dashboards/pompe-a-chaleur.yaml) est un tableau de
+bord prêt à l'emploi, construit avec les seules cartes intégrées à Home Assistant :
+
+* une vue **Accueil** pour l'utilisateur final : état de la PAC en clair, thermostat du plancher,
+  eau chaude sanitaire, mode vacances, graphique des dernières 24 heures, et un encadré d'alerte
+  qui n'apparaît qu'en cas d'alarme ;
+* une vue **Technique** : fonctionnement, anti-légionelle, compteurs et programmes horaires.
+
+Pour l'installer, créez un tableau de bord vide, ouvrez son *éditeur de configuration brute* et
+collez-y le contenu du fichier. Les identifiants d'entités sont ceux de Home Assistant 2026.11 avec
+les noms d'entités en anglais ; adaptez-les si les vôtres diffèrent.
+
 ## Prérequis
 
 * Home Assistant 2026.2 ou plus récent.
@@ -99,7 +113,7 @@ la détection se trompe.
 
 ## État de validation
 
-* **Tests automatisés** : 29 tests, sur Home Assistant 2026.2 et sur la version la plus récente,
+* **Tests automatisés** : 30 tests, sur Home Assistant 2026.2 et sur la version la plus récente,
   contre un simulateur qui rejoue des relevés réels de PAC Duo et Mono.
 * **En conditions réelles** : installée sur une PAC Orca (plancher chauffant et eau chaude sanitaire)
   avec Home Assistant 2026.11. La lecture de toutes les familles y est vérifiée.

@@ -12,6 +12,7 @@ Base : [Tomasinjo/orca-energy-ha](https://github.com/Tomasinjo/orca-energy-ha) 2
 - Thermostat : bornes de consigne reprises de `config.yml` (10 à 35 °C).
 - `manifest.json` : `aiohttp` et `PyYAML` retirés des dépendances (fournis par Home Assistant, refusés par hassfest).
 - Icône de l'intégration, tests de régression automatisés, fichier de test `test.py` retiré du composant.
+- Exemple de tableau de bord : `dashboards/pompe-a-chaleur.yaml`.
 
 ## 2.5.0
 

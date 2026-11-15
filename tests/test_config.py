@@ -36,3 +36,14 @@ def test_alarms_and_measurements_are_read_only():
     for c in CONFIG:
         if c["id"].startswith(("alarm_", "error_code", "hp_power", "power_limit_", "compressor_hours", "heater_hours")):
             assert not c["adjustable"]["enabled"], c["tag"]
+
+
+def test_dashboard_example_is_valid():
+    """The example dashboard parses and only uses built-in cards."""
+    dashboard = yaml.safe_load(
+        (Path(__file__).parents[1] / "dashboards/pompe-a-chaleur.yaml").read_text(encoding="utf8")
+    )
+    cards = [c for v in dashboard["views"] for s in v["sections"] for c in s["cards"]]
+    assert {v["path"] for v in dashboard["views"]} == {"accueil", "technique"}
+    assert cards and all(not c["type"].startswith("custom:") for c in cards)
+    assert all("entity" in c for c in cards if c["type"] == "tile")

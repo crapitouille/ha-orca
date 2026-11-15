@@ -1,0 +1,344 @@
+# Tableau de bord « Pompe à chaleur » pour l'intégration Orca (crapitouille/ha-orca).
+#
+# Deux vues : « Accueil » pour l'utilisateur final (état, chauffage, eau chaude,
+# absence, historique) et « Technique » (fonctionnement, anti-légionelle, compteurs).
+# Il n'utilise que des cartes intégrées à Home Assistant.
+#
+# Installation :
+#   1. Paramètres > Tableaux de bord > Ajouter un tableau de bord, en partant d'un tableau de bord vide.
+#   2. Ouvrir ce tableau de bord, puis le crayon > menu ⋮ > Éditeur de configuration brute.
+#   3. Remplacer tout le contenu par ce fichier et enregistrer.
+#
+# Les identifiants d'entités (sensor.orca_heat_pump_...) sont ceux créés par
+# Home Assistant 2026.11 pour un appareil nommé « Orca Heat Pump », avec les noms
+# d'entités en anglais et un circuit nommé « Floor ». S'ils diffèrent chez vous,
+# adaptez-les : une tuile dont l'entité n'existe pas affiche « Entité introuvable ».
+# Les entités que votre PAC ne fournit pas peuvent simplement être retirées.
+
+views:
+- title: Accueil
+  path: accueil
+  icon: mdi:home-thermometer
+  type: sections
+  max_columns: 3
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: État
+      icon: mdi:heat-pump
+    - type: markdown
+      content: |-
+        ## ⚠️ La pompe à chaleur signale une alarme
+        Type d'alarme : {{ states("sensor.orca_heat_pump_alarm_type") }} · Code d'erreur : {{ states("sensor.orca_heat_pump_error_code") }}
+
+        Consultez l'écran de la pompe à chaleur ou contactez l'installateur.
+      visibility:
+      - condition: state
+        entity: binary_sensor.orca_heat_pump_alarm_active
+        state: 'on'
+      grid_options:
+        columns: full
+    - type: markdown
+      content: |-
+        {% set s = states("sensor.orca_heat_pump_current_state") %}{% set v = states("sensor.orca_heat_pump_position_of_3_way_valve") %}{% set etats = {"idle": "au repos", "heating": "en chauffe", "cooling": "en rafraîchissement", "defrost": "en dégivrage"} %}## La pompe à chaleur est {{ etats.get(s, s) }}
+        {% if s == "heating" %}{{ "Elle produit l'eau chaude sanitaire." if v == "hot_water" else "Elle chauffe le plancher." }}{% elif s == "idle" %}Aucune demande en cours.{% endif %}
+      grid_options:
+        columns: full
+    - type: tile
+      entity: sensor.orca_heat_pump_outside_temperature
+      name: Température extérieure
+      icon: mdi:thermometer
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.orca_heat_pump_outdoor_unit_power
+      name: Puissance
+      icon: mdi:speedometer
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: binary_sensor.orca_heat_pump_alarm_active
+      name: Alarme
+      icon: mdi:alert-circle
+      color: red
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: binary_sensor.orca_heat_pump_electric_heater
+      name: Appoint électrique
+      icon: mdi:heating-coil
+      color: orange
+      grid_options:
+        columns: 6
+  - type: grid
+    cards:
+    - type: heading
+      heading: Chauffage
+      icon: mdi:heating-coil
+    - type: tile
+      entity: climate.orca_heat_pump_floor
+      name: Plancher chauffant
+      icon: mdi:heating-coil
+      features:
+      - type: target-temperature
+      - type: climate-hvac-modes
+        style: icons
+      grid_options:
+        columns: full
+    - type: tile
+      entity: binary_sensor.orca_heat_pump_floor_pump_status
+      name: Circulateur plancher
+      icon: mdi:pump
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.orca_heat_pump_internal_temperature
+      name: Eau du circuit
+      icon: mdi:thermometer-water
+      grid_options:
+        columns: 6
+  - type: grid
+    cards:
+    - type: heading
+      heading: Eau chaude sanitaire
+      icon: mdi:water-boiler
+    - type: tile
+      entity: water_heater.orca_heat_pump_water_heater
+      name: Eau chaude
+      icon: mdi:water-boiler
+      features:
+      - type: target-temperature
+      grid_options:
+        columns: full
+    - type: tile
+      entity: sensor.orca_heat_pump_hot_water_top
+      name: Température du ballon
+      icon: mdi:thermometer-water
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.orca_heat_pump_hot_water_timer_programme
+      name: Programme horaire
+      icon: mdi:clock-outline
+      grid_options:
+        columns: 6
+  - type: grid
+    cards:
+    - type: heading
+      heading: Absence
+      icon: mdi:bag-suitcase
+    - type: tile
+      entity: switch.orca_heat_pump_holiday_mode
+      name: Mode vacances
+      icon: mdi:bag-suitcase
+      features:
+      - type: toggle
+      grid_options:
+        columns: full
+    - type: heading
+      heading: Date de fin des vacances
+      heading_style: subtitle
+    - type: tile
+      entity: number.orca_heat_pump_holiday_end_day
+      name: Jour
+      icon: mdi:calendar-today
+      features:
+      - type: numeric-input
+        style: buttons
+      grid_options:
+        columns: 4
+    - type: tile
+      entity: number.orca_heat_pump_holiday_end_month
+      name: Mois
+      icon: mdi:calendar-month
+      features:
+      - type: numeric-input
+        style: buttons
+      grid_options:
+        columns: 4
+    - type: tile
+      entity: number.orca_heat_pump_holiday_end_year
+      name: Année
+      icon: mdi:calendar
+      features:
+      - type: numeric-input
+        style: buttons
+      grid_options:
+        columns: 4
+  - type: grid
+    column_span: 2
+    cards:
+    - type: heading
+      heading: Dernières 24 heures
+      icon: mdi:chart-line
+    - type: history-graph
+      hours_to_show: 24
+      entities:
+      - entity: sensor.orca_heat_pump_outside_temperature
+        name: Extérieur
+        color: '#1f77b4'
+      - entity: sensor.orca_heat_pump_hot_water_top
+        name: Ballon d'eau chaude
+        color: '#d62728'
+      - entity: sensor.orca_heat_pump_internal_temperature
+        name: Eau du circuit
+        color: '#ff7f0e'
+      grid_options:
+        columns: full
+- title: Technique
+  path: technique
+  icon: mdi:cog
+  type: sections
+  max_columns: 3
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Fonctionnement
+      icon: mdi:heat-pump
+    - type: tile
+      entity: sensor.orca_heat_pump_current_state
+      name: État de la PAC
+      icon: mdi:heat-pump
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.orca_heat_pump_position_of_3_way_valve
+      name: Vanne 3 voies
+      icon: mdi:valve
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.orca_heat_pump_internal_temperature
+      name: Eau du circuit
+      icon: mdi:thermometer-water
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.orca_heat_pump_internal_desired_temperature
+      name: Consigne de l'eau
+      icon: mdi:thermometer-auto
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: binary_sensor.orca_heat_pump_floor_pump_status
+      name: Circulateur plancher
+      icon: mdi:pump
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: binary_sensor.orca_heat_pump_outdoor_unit_pump
+      name: Circulateur unité extérieure
+      icon: mdi:pump
+      grid_options:
+        columns: 6
+    - type: history-graph
+      hours_to_show: 24
+      entities:
+      - entity: sensor.orca_heat_pump_current_state
+        name: État
+      - entity: sensor.orca_heat_pump_position_of_3_way_valve
+        name: Vanne 3 voies
+      - entity: binary_sensor.orca_heat_pump_electric_heater
+        name: Appoint électrique
+      grid_options:
+        columns: full
+  - type: grid
+    cards:
+    - type: heading
+      heading: Anti-légionelle
+      icon: mdi:bacteria-outline
+    - type: tile
+      entity: switch.orca_heat_pump_legionella_programme
+      name: Programme anti-légionelle
+      icon: mdi:bacteria-outline
+      features:
+      - type: toggle
+      grid_options:
+        columns: full
+    - type: tile
+      entity: number.orca_heat_pump_legionella_temperature
+      name: Température
+      icon: mdi:thermometer-high
+      features:
+      - type: numeric-input
+        style: buttons
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: number.orca_heat_pump_legionella_start_day
+      name: Jour (1 à 7)
+      icon: mdi:calendar-week
+      features:
+      - type: numeric-input
+        style: buttons
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: number.orca_heat_pump_legionella_start_hour
+      name: Heure
+      icon: mdi:clock-outline
+      features:
+      - type: numeric-input
+        style: buttons
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: number.orca_heat_pump_legionella_start_minute
+      name: Minute
+      icon: mdi:clock-outline
+      features:
+      - type: numeric-input
+        style: buttons
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.orca_heat_pump_legionella_cycle
+      name: Cycle
+      icon: mdi:repeat
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.orca_heat_pump_legionella_max_duration
+      name: Durée maximale
+      icon: mdi:timer-outline
+      grid_options:
+        columns: 6
+  - type: grid
+    cards:
+    - type: heading
+      heading: Compteurs et programmes
+      icon: mdi:counter
+    - type: markdown
+      content: |-
+        | | Heures de fonctionnement |
+        |---|---:|
+        | Compresseur | **{{ states("sensor.orca_heat_pump_compressor_operating_hours_thousands") | int(0) * 1000 + states("sensor.orca_heat_pump_compressor_operating_hours_units") | int(0) }} h** |
+        | Appoint électrique | **{{ states("sensor.orca_heat_pump_electric_heater_operating_hours_thousands") | int(0) * 1000 + states("sensor.orca_heat_pump_electric_heater_operating_hours_units") | int(0) }} h** |
+      grid_options:
+        columns: full
+    - type: tile
+      entity: sensor.orca_heat_pump_hot_water_timer_programme
+      name: Programme eau chaude
+      icon: mdi:clock-outline
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.orca_heat_pump_silent_mode_timer_programme
+      name: Programme mode silencieux
+      icon: mdi:volume-off
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.orca_heat_pump_alarm_type
+      name: Type d'alarme
+      icon: mdi:alert-circle-outline
+      grid_options:
+        columns: 6
+    - type: tile
+      entity: sensor.orca_heat_pump_error_code
+      name: Code d'erreur
+      icon: mdi:alert-circle-outline
+      grid_options:
+        columns: 6
