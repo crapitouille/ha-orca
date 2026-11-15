@@ -105,10 +105,19 @@ views:
       icon: mdi:water-boiler
     - type: tile
       entity: water_heater.orca_heat_pump_water_heater
-      name: Eau chaude
+      name: Eau chaude (pendant le programme)
       icon: mdi:water-boiler
       features:
       - type: target-temperature
+      grid_options:
+        columns: full
+    - type: tile
+      entity: number.orca_heat_pump_hot_water_reduced_temperature
+      name: Température réduite (hors programme)
+      icon: mdi:water-thermometer-outline
+      features:
+      - type: numeric-input
+        style: buttons
       grid_options:
         columns: full
     - type: tile
@@ -118,11 +127,17 @@ views:
       grid_options:
         columns: 6
     - type: tile
+      entity: sensor.orca_heat_pump_hot_water_current_desired_temperature
+      name: Consigne en cours
+      icon: mdi:thermometer-auto
+      grid_options:
+        columns: 6
+    - type: tile
       entity: sensor.orca_heat_pump_hot_water_timer_programme
       name: Programme horaire
       icon: mdi:clock-outline
       grid_options:
-        columns: 6
+        columns: full
   - type: grid
     cards:
     - type: heading

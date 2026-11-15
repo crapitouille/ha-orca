@@ -106,3 +106,19 @@ async def test_read_only_tags_cannot_be_written(pac_factory):
     with pytest.raises(ValueError):
         await api.set_value_by_id("alarm_active", True)
     assert pac.writes == []
+
+
+async def test_hot_water_reduced_temperature(pac_factory):
+    """Lower temperature regime of the hot water (outside the timer programme)."""
+    api, pac = await _client(pac_factory, scenarios()["duo"])
+    snap = api_snapshot(await api.fetch_all())
+    assert snap["wh_reduced_temp"]["value"] == 15.0 and snap["wh_reduced_temp"]["platform"] == "number"
+    assert snap["wh_active_setpoint"]["value"] == 44.5 and snap["wh_active_setpoint"]["platform"] == "sensor"
+    await api.set_value_by_id("wh_reduced_temp", 40)
+    assert pac.writes == [("2_Temp_vode_sanitarna_NIZJA", "400")]
+    for bad in (9.9, 60.5):
+        with pytest.raises(ValueError):
+            await api.set_value_by_id("wh_reduced_temp", bad)
+    with pytest.raises(ValueError):
+        await api.set_value_by_id("wh_active_setpoint", 50)
+    assert len(pac.writes) == 1

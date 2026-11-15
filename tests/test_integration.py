@@ -86,6 +86,9 @@ async def test_added_families(hass, pac_factory):
     assert inv["compressor_hours_thousands"]["state"] == "5" and inv["compressor_hours_units"]["state"] == "862"
     assert inv["holiday_turned_on"]["domain"] == "switch"
     assert inv["wh_timer_programme"]["domain"] == "sensor" and inv["wh_timer_programme"]["state"] == "24h"
+    assert inv["wh_reduced_temp"]["domain"] == "number" and float(inv["wh_reduced_temp"]["state"]) == 15.0
+    assert (inv["wh_reduced_temp"]["attributes"]["min"], inv["wh_reduced_temp"]["attributes"]["max"]) == (10, 60)
+    assert inv["wh_active_setpoint"]["domain"] == "sensor" and float(inv["wh_active_setpoint"]["state"]) == 44.5
 
     call = hass.services.async_call
     pac.writes.clear()
@@ -95,9 +98,11 @@ async def test_added_families(hass, pac_factory):
     await call("switch", "turn_on", {"entity_id": inv["legionella_turned_on"]["entity_id"]}, blocking=True)
     await call("number", "set_value", {"entity_id": inv["legionella_temp"]["entity_id"], "value": 62}, blocking=True)
     await call("number", "set_value", {"entity_id": inv["holiday_day"]["entity_id"], "value": 24}, blocking=True)
+    await call("number", "set_value", {"entity_id": inv["wh_reduced_temp"]["entity_id"], "value": 40}, blocking=True)
     assert pac.writes == [
         ("2_TIMER_1_Ura_ON_1", "6"), ("2_TIMER_1_Minute_ON_1", "30"), ("2_TIMER_1_Ponedeljek_1", "0"),
         ("2_Legionela_vklop", "1"), ("2_Temperatura_legionela", "620"), ("2_Dan_pocitniski", "24"),
+        ("2_Temp_vode_sanitarna_NIZJA", "400"),
     ]
     await _refresh(hass, entry)
     assert hass.states.get(inv["timer1_p1_on_hour"]["entity_id"]).state == "6"

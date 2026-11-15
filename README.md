@@ -17,8 +17,8 @@ C'est une version étendue de l'intégration
 [Tomasinjo/orca-energy-ha](https://github.com/Tomasinjo/orca-energy-ha) (2.4.3), dont elle garde le
 fonctionnement, la configuration et toutes les entités. Elle y ajoute :
 
-* **207 variables** de la PAC : programmes horaires, anti-légionelle, alarmes, puissance,
-  heures de fonctionnement, mode vacances ;
+* **209 variables** de la PAC : programmes horaires, anti-légionelle, alarmes, puissance,
+  heures de fonctionnement, mode vacances, température réduite de l'eau chaude ;
 * un **thermostat qui fonctionne sans sonde d'ambiance**, avec marche et arrêt du circuit ;
 * des **tests de régression automatisés** contre un simulateur de PAC.
 
@@ -35,6 +35,7 @@ courbe de chauffe, limites de puissance), plus :
 | Puissance et débit | puissance de la PAC, limites et plafonds par mode, entrées débit et compresseur | non |
 | Heures de fonctionnement | compresseur et appoint électrique | non |
 | Mode vacances | activation et date de fin | oui |
+| Eau chaude, régime bas | température appliquée en dehors du programme horaire, consigne en cours | oui pour la température |
 
 Une variable que la PAC ne connaît pas est simplement ignorée : le nombre d'entités dépend du modèle
 et de l'installation. Avec un plancher chauffant et de l'eau chaude sanitaire, on obtient environ
@@ -113,12 +114,13 @@ la détection se trompe.
 
 ## État de validation
 
-* **Tests automatisés** : 30 tests, sur Home Assistant 2026.2 et sur la version la plus récente,
+* **Tests automatisés** : 31 tests, sur Home Assistant 2026.2 et sur la version la plus récente,
   contre un simulateur qui rejoue des relevés réels de PAC Duo et Mono.
 * **En conditions réelles** : installée sur une PAC Orca (plancher chauffant et eau chaude sanitaire)
   avec Home Assistant 2026.11. La lecture de toutes les familles y est vérifiée.
 * **À vérifier chez vous** : les écritures ajoutées par cette version (programmes horaires,
-  anti-légionelle, mode vacances, marche et arrêt du thermostat) sont testées sur le simulateur.
+  anti-légionelle, mode vacances, température réduite de l'eau chaude, marche et arrêt du thermostat)
+  sont testées sur le simulateur.
   Après un premier réglage depuis Home Assistant, vérifiez sur l'écran de la PAC qu'il a bien été
   pris en compte.
 

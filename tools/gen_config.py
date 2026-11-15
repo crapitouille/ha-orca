@@ -136,10 +136,18 @@ entry("2_Mesec_pocitniski", "holiday_month", "holiday end month", "počitnice do
 entry("2_Leto_pocitniski", "holiday_year", "holiday end year", "počitnice do leto", "integer", unit="", adj=(0, 99, 1),
       desc="Dvomestno leto (25 = 2025)")
 
+# ---------------------------------------------------------------- eau chaude : régime bas
+section("Hot water: lower temperature regime (outside the timer programme)")
+entry("2_Temp_vode_sanitarna_NIZJA", "wh_reduced_temp", "hot water reduced temperature",
+      "nižja temperatura sanitarne vode", "float", hc=4, unit="°C", adj=(10.0, 60.0, 0.1),
+      desc="Nižji temperaturni režim: aktiven, ko časovni program ni aktiven")
+entry("2_Temp_zelena_SV", "wh_active_setpoint", "hot water current desired temperature",
+      "trenutna želena temperatura sanitarne vode", "float", hc=4, unit="°C")
+
 header = """
 ################################################################################
 # Added families: timer programmes, anti-legionella, alarms, power and flow,
-# operating hours, holiday mode.
+# operating hours, holiday mode, hot water lower temperature regime.
 # Type "integer" = whole number sent and received as is (hours, minutes, days),
 # unlike "float" which is a single-decimal value stored x10.
 ################################################################################

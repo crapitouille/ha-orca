@@ -1049,7 +1049,7 @@
   heating_circuit: 99
 ################################################################################
 # Added families: timer programmes, anti-legionella, alarms, power and flow,
-# operating hours, holiday mode.
+# operating hours, holiday mode, hot water lower temperature regime.
 # Type "integer" = whole number sent and received as is (hours, minutes, days),
 # unlike "float" which is a single-decimal value stored x10.
 ################################################################################
@@ -3720,3 +3720,33 @@
       max: 99
       step: 1
   heating_circuit: 0
+
+## Hot water: lower temperature regime (outside the timer programme)
+
+- tag: 2_Temp_vode_sanitarna_NIZJA
+  id: wh_reduced_temp
+  name:
+    en: "hot water reduced temperature"
+    si: "nižja temperatura sanitarne vode"
+  description: "Nižji temperaturni režim: aktiven, ko časovni program ni aktiven"
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 10.0
+      max: 60.0
+      step: 0.1
+  heating_circuit: 4
+
+- tag: 2_Temp_zelena_SV
+  id: wh_active_setpoint
+  name:
+    en: "hot water current desired temperature"
+    si: "trenutna želena temperatura sanitarne vode"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 4

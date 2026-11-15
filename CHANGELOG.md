@@ -2,6 +2,12 @@
 
 Base : [Tomasinjo/orca-energy-ha](https://github.com/Tomasinjo/orca-energy-ha) 2.4.3.
 
+## 2.5.2
+
+- Eau chaude sanitaire : température du régime bas, appliquée en dehors du programme horaire
+  (`2_Temp_vode_sanitarna_NIZJA`, réglable de 10 à 60 °C), et consigne en cours (`2_Temp_zelena_SV`).
+- Tableau de bord d'exemple : tuiles correspondantes dans la section « Eau chaude sanitaire ».
+
 ## 2.5.1
 
 - Thermostat : l'entité se crée aussi quand aucune sonde d'ambiance n'est raccordée au circuit
