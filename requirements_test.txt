@@ -1,0 +1,5 @@
+pytest-homeassistant-custom-component>=0.13.316
+pytest-cov
+aiofiles>=25.1.0
+pydantic>=2.0.6
+PyYAML>=6.0

@@ -1,0 +1,34 @@
+name: Release
+
+# Push a tag equal to the version in custom_components/orca/manifest.json
+# (for example 2.5.1, without "v") to publish a GitHub release.
+# The Home Assistant Marketplace and HACS then offer it as an update.
+on:
+  push:
+    tags: ["[0-9]*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tag matches the integration version
+        run: |
+          version=$(python3 -c "import json; print(json.load(open('custom_components/orca/manifest.json'))['version'])")
+          if [ "$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match manifest version $version"
+            exit 1
+          fi
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        # A release created in the GitHub web UI already exists: nothing to do.
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "Release $GITHUB_REF_NAME already exists"
+          else
+            gh release create "$GITHUB_REF_NAME" --title "Orca $GITHUB_REF_NAME" --generate-notes --verify-tag
+          fi

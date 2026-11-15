@@ -1,0 +1,3166 @@
+{
+ "duo": {
+  "api": {
+   "current_state": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Current state",
+    "name_si": "Stanje delovanja",
+    "platform": "sensor",
+    "tag": "2_Rezim_delov_TC",
+    "type": "multimode",
+    "unit": null,
+    "value": "idle"
+   },
+   "desired_internal_temp": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Internal desired temperature",
+    "name_si": "Interna tarčna temperatura",
+    "platform": "sensor",
+    "tag": "2_Izrac_temp_TC",
+    "type": "float",
+    "unit": "°C",
+    "value": 9.0
+   },
+   "electric_heater": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Electric heater",
+    "name_si": "Delovanje električnega grelca",
+    "platform": "binary_sensor",
+    "tag": "2_Vklop_ele_grelca_1",
+    "type": "boolean",
+    "unit": null,
+    "value": false
+   },
+   "electric_heater_on_temp_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 10.0,
+      "min": -30.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Electric heater level 1",
+    "name_si": "Vklop električnega grelca stopnja 1",
+    "platform": "number",
+    "tag": "2_Zun_temp_za_vklop_Grelec_1",
+    "type": "float",
+    "unit": "°C",
+    "value": -10.0
+   },
+   "electric_heater_on_temp_2": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 10.0,
+      "min": -30.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Electric heater level 2",
+    "name_si": "Vklop električnega grelca stopnja 2",
+    "platform": "number",
+    "tag": "2_Zun_temp_za_vklop_Grelec_2",
+    "type": "float",
+    "unit": "°C",
+    "value": -10.0
+   },
+   "electric_heater_on_temp_3": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 10.0,
+      "min": -30.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Electric heater level 3",
+    "name_si": "Vklop električnega grelca stopnja 3",
+    "platform": "number",
+    "tag": "2_Zun_temp_za_vklop_Grelec_3",
+    "type": "float",
+    "unit": "°C",
+    "value": -10.0
+   },
+   "hc_curve_shift_paralell_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 9.9,
+      "min": -9.9,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor parallel curve shift",
+    "name_si": "Talno vzporedna korekcija krivulje",
+    "platform": "number",
+    "tag": "2_Zamik_krivulje_MK1",
+    "type": "float",
+    "unit": "",
+    "value": 0.0
+   },
+   "hc_curve_shift_slope_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 9.9,
+      "min": -9.9,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor slope curve shift",
+    "name_si": "Talno korekcija nagiba krivulje",
+    "platform": "number",
+    "tag": "2_Nagib_krivulje_MK1",
+    "type": "float",
+    "unit": "",
+    "value": 0.0
+   },
+   "hc_desired_day_temp_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 35.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor desired day temperature",
+    "name_si": "Talno željena dnevna temperatura",
+    "platform": "excluded",
+    "tag": "2_Temp_prostor_dnevna",
+    "type": "float",
+    "unit": "°C",
+    "value": 20.1
+   },
+   "hc_desired_night_temp_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 35.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor desired night temperature",
+    "name_si": "Talno željena nočna temperatura",
+    "platform": "excluded",
+    "tag": "2_Temp_prostor_nocna",
+    "type": "float",
+    "unit": "°C",
+    "value": 18.4
+   },
+   "hc_desired_outlet_temp_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor desired outlet temperature",
+    "name_si": "Talno željena temperatura vtoka",
+    "platform": "sensor",
+    "tag": "2_Temp_zelena_MK_1",
+    "type": "float",
+    "unit": "°C",
+    "value": 0.0
+   },
+   "hc_desired_room_temp_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor desired room temperature",
+    "name_si": "Talno željena prostorska temperatura",
+    "platform": "sensor",
+    "tag": "2_Zahtevana_RF_MK_1",
+    "type": "float",
+    "unit": "°C",
+    "value": 20.1
+   },
+   "hc_max_outlet_temp_heating_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 60.0,
+      "min": 8.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor max outlet temperature heating",
+    "name_si": "Talno max temperatura vtoka ogrevanje",
+    "platform": "number",
+    "tag": "2_Max_VF_MK1",
+    "type": "float",
+    "unit": "°C",
+    "value": 40.0
+   },
+   "hc_min_outlet_temp_cooling_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 40.0,
+      "min": 9.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor min outlet temperature cooling",
+    "name_si": "Talno min temperatura vtoka hlajenje",
+    "platform": "number",
+    "tag": "2_Min_VF_MK1_HL",
+    "type": "float",
+    "unit": "°C",
+    "value": 18.0
+   },
+   "hc_min_outlet_temp_heating_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 50.0,
+      "min": 8.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor min outlet temperature heating",
+    "name_si": "Talno min temperatura vtoka ogrevanje",
+    "platform": "number",
+    "tag": "2_Min_VF_MK1",
+    "type": "float",
+    "unit": "°C",
+    "value": 27.0
+   },
+   "hc_mix_valve_pos_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor mixing valve position",
+    "name_si": "Talno odprtost mešalnega ventila",
+    "platform": "sensor",
+    "tag": "2_Odstotki_odprtosti_MP1",
+    "type": "float",
+    "unit": "%",
+    "value": 0.0
+   },
+   "hc_mix_valve_status_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor mixing valve status",
+    "name_si": "Talno stanje mešalnega ventila",
+    "platform": "sensor",
+    "tag": "2_Delovanje_MP1",
+    "type": "multimode",
+    "unit": null,
+    "value": "off"
+   },
+   "hc_mode_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor mode of operation",
+    "name_si": "Talno način delovanja",
+    "platform": "sensor",
+    "tag": "2_Rezim_MK1",
+    "type": "multimode",
+    "unit": null,
+    "value": "heat"
+   },
+   "hc_name_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor name heating circuit",
+    "name_si": "Talno ime ogrevalnega kroga",
+    "platform": "excluded",
+    "tag": "MK1_IME",
+    "type": "multimode",
+    "unit": null,
+    "value": "Floor"
+   },
+   "hc_outlet_temp_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor outlet temperature",
+    "name_si": "Talno temperatura vtoka",
+    "platform": "sensor",
+    "tag": "2_Poti2",
+    "type": "float",
+    "unit": "°C",
+    "value": 20.7
+   },
+   "hc_pump_status_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor pump status",
+    "name_si": "Talno stanje obtočne črpalke",
+    "platform": "binary_sensor",
+    "tag": "2_Vklop_C1",
+    "type": "boolean",
+    "unit": null,
+    "value": false
+   },
+   "hc_room_temp_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor room temperature",
+    "name_si": "Talno prostorska temperatura",
+    "platform": "sensor",
+    "tag": "2_Temp_Prostora",
+    "type": "float",
+    "unit": "°C",
+    "value": 20.7
+   },
+   "hc_turned_on_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor turned on",
+    "name_si": "Talno vklopljeno",
+    "platform": "excluded",
+    "tag": "2_MK1_vklop",
+    "type": "boolean",
+    "unit": null,
+    "value": true
+   },
+   "internal_temp": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Internal temperature",
+    "name_si": "Interna temperatura",
+    "platform": "sensor",
+    "tag": "2_Poti1",
+    "type": "float",
+    "unit": "°C",
+    "value": 25.5
+   },
+   "max_power_cooling": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 100.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Max power cooling",
+    "name_si": "Max moč hlajenje",
+    "platform": "number",
+    "tag": "2_Max_moc_TC_pri_HLAJ",
+    "type": "float",
+    "unit": "%",
+    "value": 35.0
+   },
+   "max_power_heating": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 100.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Max power heating",
+    "name_si": "Max moč ogrevanje",
+    "platform": "number",
+    "tag": "2_Max_moc_TC_pri_OGR",
+    "type": "float",
+    "unit": "%",
+    "value": 100.0
+   },
+   "max_power_water": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 100.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Max power hot water",
+    "name_si": "Max moč sanitarna voda",
+    "platform": "number",
+    "tag": "2_Max_moc_TC_pri_SV",
+    "type": "float",
+    "unit": "%",
+    "value": 57.0
+   },
+   "outdoor_temp": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Outside temperature",
+    "name_si": "Zunanja temperatura",
+    "platform": "sensor",
+    "tag": "2_Temp_Zunanja",
+    "type": "float",
+    "unit": "°C",
+    "value": 6.0
+   },
+   "outdoor_unit_power": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Outdoor unit power",
+    "name_si": "Zunanja enota moč",
+    "platform": "sensor",
+    "tag": "2_PRIKAZ_Reg_temp_vode",
+    "type": "float",
+    "unit": "%",
+    "value": 0.0
+   },
+   "outdoor_unit_pump": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Outdoor unit pump",
+    "name_si": "Zunanja enota črpalka",
+    "platform": "binary_sensor",
+    "tag": "2_Vklop_C0",
+    "type": "boolean",
+    "unit": null,
+    "value": false
+   },
+   "timer_programme_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor timer programme",
+    "name_si": "Talno časovni program",
+    "platform": "excluded",
+    "tag": "2_Izbira_TIMERJA_MK1",
+    "type": "multimode",
+    "unit": null,
+    "value": "24h"
+   },
+   "valve_pos": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Position of 3-way valve",
+    "name_si": "Preklopni ventil",
+    "platform": "sensor",
+    "tag": "2_Preklop_PV1",
+    "type": "multimode",
+    "unit": null,
+    "value": "hot_water"
+   },
+   "wh_desired_temp": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 60.0,
+      "min": 25.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Hot water desired temperature",
+    "name_si": "Sanitarna voda željena temperatura",
+    "platform": "excluded",
+    "tag": "2_Temp_vode_sanitarna",
+    "type": "float",
+    "unit": "°C",
+    "value": 44.5
+   },
+   "wh_on_diff": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 8.0,
+      "min": 0.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Hot water on difference",
+    "name_si": "Sanitarna voda diferenca vklopa",
+    "platform": "number",
+    "tag": "2_Diferenca_vklopa_SV",
+    "type": "float",
+    "unit": "°C",
+    "value": 4.0
+   },
+   "wh_temp_bottom": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Hot water bottom",
+    "name_si": "Sanitarna voda spodaj",
+    "platform": "sensor",
+    "tag": "2_Poti4",
+    "type": "float",
+    "unit": "°C",
+    "value": 42.1
+   },
+   "wh_temp_top": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Hot water top",
+    "name_si": "Sanitarna voda zgoraj",
+    "platform": "sensor",
+    "tag": "2_Poti3",
+    "type": "float",
+    "unit": "°C",
+    "value": 43.0
+   },
+   "wh_turned_on": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Hot water enabled",
+    "name_si": "Sanitarna voda vklop",
+    "platform": "excluded",
+    "tag": "2_SV_vklop",
+    "type": "boolean",
+    "unit": null,
+    "value": true
+   }
+  },
+  "circuits": [
+   0,
+   1,
+   4
+  ],
+  "ha": {
+   "current_state": {
+    "category": null,
+    "domain": "sensor",
+    "state": "idle",
+    "unit": null
+   },
+   "desired_internal_temp": {
+    "category": null,
+    "domain": "sensor",
+    "state": "9.0",
+    "unit": "°C"
+   },
+   "electric_heater": {
+    "category": null,
+    "domain": "binary_sensor",
+    "state": "off",
+    "unit": null
+   },
+   "electric_heater_on_temp_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "-10.0",
+    "unit": "°C"
+   },
+   "electric_heater_on_temp_2": {
+    "category": "config",
+    "domain": "number",
+    "state": "-10.0",
+    "unit": "°C"
+   },
+   "electric_heater_on_temp_3": {
+    "category": "config",
+    "domain": "number",
+    "state": "-10.0",
+    "unit": "°C"
+   },
+   "hc_curve_shift_paralell_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "0.0",
+    "unit": null
+   },
+   "hc_curve_shift_slope_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "0.0",
+    "unit": null
+   },
+   "hc_desired_outlet_temp_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "0.0",
+    "unit": "°C"
+   },
+   "hc_desired_room_temp_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "20.1",
+    "unit": "°C"
+   },
+   "hc_max_outlet_temp_heating_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "40.0",
+    "unit": "°C"
+   },
+   "hc_min_outlet_temp_cooling_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "18.0",
+    "unit": "°C"
+   },
+   "hc_min_outlet_temp_heating_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "27.0",
+    "unit": "°C"
+   },
+   "hc_mix_valve_pos_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "0.0",
+    "unit": "%"
+   },
+   "hc_mix_valve_status_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "off",
+    "unit": null
+   },
+   "hc_mode_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "heat",
+    "unit": null
+   },
+   "hc_outlet_temp_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "20.7",
+    "unit": "°C"
+   },
+   "hc_pump_status_1": {
+    "category": null,
+    "domain": "binary_sensor",
+    "state": "off",
+    "unit": null
+   },
+   "hc_room_temp_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "20.7",
+    "unit": "°C"
+   },
+   "internal_temp": {
+    "category": null,
+    "domain": "sensor",
+    "state": "25.5",
+    "unit": "°C"
+   },
+   "max_power_cooling": {
+    "category": "config",
+    "domain": "number",
+    "state": "35.0",
+    "unit": "%"
+   },
+   "max_power_heating": {
+    "category": "config",
+    "domain": "number",
+    "state": "100.0",
+    "unit": "%"
+   },
+   "max_power_water": {
+    "category": "config",
+    "domain": "number",
+    "state": "57.0",
+    "unit": "%"
+   },
+   "outdoor_temp": {
+    "category": null,
+    "domain": "sensor",
+    "state": "6.0",
+    "unit": "°C"
+   },
+   "outdoor_unit_power": {
+    "category": null,
+    "domain": "sensor",
+    "state": "0.0",
+    "unit": "%"
+   },
+   "outdoor_unit_pump": {
+    "category": null,
+    "domain": "binary_sensor",
+    "state": "off",
+    "unit": null
+   },
+   "valve_pos": {
+    "category": null,
+    "domain": "sensor",
+    "state": "hot_water",
+    "unit": null
+   },
+   "water_heater": {
+    "category": null,
+    "domain": "water_heater",
+    "state": "idle",
+    "unit": null
+   },
+   "wh_on_diff": {
+    "category": "config",
+    "domain": "number",
+    "state": "4.0",
+    "unit": "°C"
+   },
+   "wh_temp_bottom": {
+    "category": null,
+    "domain": "sensor",
+    "state": "42.1",
+    "unit": "°C"
+   },
+   "wh_temp_top": {
+    "category": null,
+    "domain": "sensor",
+    "state": "43.0",
+    "unit": "°C"
+   }
+  },
+  "writes": [
+   [
+    "2_Temp_prostor_dnevna",
+    "201"
+   ],
+   [
+    "2_Temp_prostor_nocna",
+    "184"
+   ],
+   [
+    "2_MK1_vklop",
+    "1"
+   ],
+   [
+    "2_Zamik_krivulje_MK1",
+    "0"
+   ],
+   [
+    "2_Nagib_krivulje_MK1",
+    "0"
+   ],
+   [
+    "2_Max_VF_MK1",
+    "400"
+   ],
+   [
+    "2_Min_VF_MK1",
+    "270"
+   ],
+   [
+    "2_Min_VF_MK1_HL",
+    "180"
+   ],
+   [
+    "2_Max_moc_TC_pri_OGR",
+    "1000"
+   ],
+   [
+    "2_Max_moc_TC_pri_HLAJ",
+    "350"
+   ],
+   [
+    "2_Max_moc_TC_pri_SV",
+    "570"
+   ],
+   [
+    "2_Zun_temp_za_vklop_Grelec_1",
+    "-100"
+   ],
+   [
+    "2_Zun_temp_za_vklop_Grelec_2",
+    "-100"
+   ],
+   [
+    "2_Zun_temp_za_vklop_Grelec_3",
+    "-100"
+   ],
+   [
+    "2_SV_vklop",
+    "1"
+   ],
+   [
+    "2_Temp_vode_sanitarna",
+    "445"
+   ],
+   [
+    "2_Diferenca_vklopa_SV",
+    "40"
+   ]
+  ]
+ },
+ "mono": {
+  "api": {
+   "buffer_desired_temp": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Buffer desired temperature",
+    "name_si": "Zalogovnik željena temperatura",
+    "platform": "sensor",
+    "tag": "2_Izrac_temp_ZALOG",
+    "type": "float",
+    "unit": "°C",
+    "value": 38.0
+   },
+   "buffer_high_temp": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 55.0,
+      "min": 15.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Buffer high temperature",
+    "name_si": "Zalogovnik višja temperatura",
+    "platform": "number",
+    "tag": "2_VISJA_Temp_ZALOG_OGR",
+    "type": "float",
+    "unit": "°C",
+    "value": 39.0
+   },
+   "buffer_low_temp": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 55.0,
+      "min": 15.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Buffer low temperature",
+    "name_si": "Zalogovnik nižja temperatura",
+    "platform": "number",
+    "tag": "2_NIZJA_Temp_ZALOG_OGR",
+    "type": "float",
+    "unit": "°C",
+    "value": 32.0
+   },
+   "buffer_on_diff": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 9.0,
+      "min": 0.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Buffer on difference",
+    "name_si": "Zalogovnik diferenca vklopa",
+    "platform": "number",
+    "tag": "2_Diferenca_vklopa_ZALOG",
+    "type": "float",
+    "unit": "°C",
+    "value": 2.5
+   },
+   "buffer_temp": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Buffer temperature",
+    "name_si": "Zalogovnik temperatura",
+    "platform": "sensor",
+    "tag": "2_Temp_Zalog",
+    "type": "float",
+    "unit": "°C",
+    "value": 33.6
+   },
+   "current_state": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Current state",
+    "name_si": "Stanje delovanja",
+    "platform": "sensor",
+    "tag": "2_Rezim_delov_TC",
+    "type": "multimode",
+    "unit": null,
+    "value": "heating"
+   },
+   "desired_internal_temp": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Internal desired temperature",
+    "name_si": "Interna tarčna temperatura",
+    "platform": "sensor",
+    "tag": "2_Izrac_temp_TC",
+    "type": "float",
+    "unit": "°C",
+    "value": 47.0
+   },
+   "electric_heater": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Electric heater",
+    "name_si": "Delovanje električnega grelca",
+    "platform": "binary_sensor",
+    "tag": "2_Vklop_ele_grelca_1",
+    "type": "boolean",
+    "unit": null,
+    "value": false
+   },
+   "electric_heater_on_temp_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 10.0,
+      "min": -30.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Electric heater level 1",
+    "name_si": "Vklop električnega grelca stopnja 1",
+    "platform": "number",
+    "tag": "2_Zun_temp_za_vklop_Grelec_1",
+    "type": "float",
+    "unit": "°C",
+    "value": -10.0
+   },
+   "electric_heater_on_temp_2": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 10.0,
+      "min": -30.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Electric heater level 2",
+    "name_si": "Vklop električnega grelca stopnja 2",
+    "platform": "number",
+    "tag": "2_Zun_temp_za_vklop_Grelec_2",
+    "type": "float",
+    "unit": "°C",
+    "value": -10.0
+   },
+   "electric_heater_on_temp_3": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 10.0,
+      "min": -30.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Electric heater level 3",
+    "name_si": "Vklop električnega grelca stopnja 3",
+    "platform": "number",
+    "tag": "2_Zun_temp_za_vklop_Grelec_3",
+    "type": "float",
+    "unit": "°C",
+    "value": -10.0
+   },
+   "hc_curve_shift_paralell_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 9.9,
+      "min": -9.9,
+      "step": 0.1
+     }
+    },
+    "name_en": "Radiator parallel curve shift",
+    "name_si": "Tadiatorji vzporedna korekcija krivulje",
+    "platform": "number",
+    "tag": "2_Zamik_krivulje_MK1",
+    "type": "float",
+    "unit": "",
+    "value": 0.0
+   },
+   "hc_curve_shift_paralell_2": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 9.9,
+      "min": -9.9,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor parallel curve shift",
+    "name_si": "Talno vzporedna korekcija krivulje",
+    "platform": "number",
+    "tag": "2_Zamik_krivulje_MK2",
+    "type": "float",
+    "unit": "",
+    "value": 0.0
+   },
+   "hc_curve_shift_slope_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 9.9,
+      "min": -9.9,
+      "step": 0.1
+     }
+    },
+    "name_en": "Radiator slope curve shift",
+    "name_si": "Tadiatorji korekcija nagiba krivulje",
+    "platform": "number",
+    "tag": "2_Nagib_krivulje_MK1",
+    "type": "float",
+    "unit": "",
+    "value": 0.0
+   },
+   "hc_curve_shift_slope_2": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 9.9,
+      "min": -9.9,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor slope curve shift",
+    "name_si": "Talno korekcija nagiba krivulje",
+    "platform": "number",
+    "tag": "2_Nagib_krivulje_MK2",
+    "type": "float",
+    "unit": "",
+    "value": 0.0
+   },
+   "hc_desired_day_temp_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 35.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Radiator desired day temperature",
+    "name_si": "Tadiatorji željena dnevna temperatura",
+    "platform": "excluded",
+    "tag": "2_Temp_prostor_dnevna",
+    "type": "float",
+    "unit": "°C",
+    "value": 22.0
+   },
+   "hc_desired_day_temp_2": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 35.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor desired day temperature",
+    "name_si": "Talno željena dnevna temperatura",
+    "platform": "excluded",
+    "tag": "2_Temp_prostor_dnevna_OK2",
+    "type": "float",
+    "unit": "°C",
+    "value": 22.5
+   },
+   "hc_desired_night_temp_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 35.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Radiator desired night temperature",
+    "name_si": "Tadiatorji željena nočna temperatura",
+    "platform": "excluded",
+    "tag": "2_Temp_prostor_nocna",
+    "type": "float",
+    "unit": "°C",
+    "value": 21.0
+   },
+   "hc_desired_night_temp_2": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 35.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor desired night temperature",
+    "name_si": "Talno željena nočna temperatura",
+    "platform": "excluded",
+    "tag": "2_Temp_prostor_nocna_OK2",
+    "type": "float",
+    "unit": "°C",
+    "value": 21.0
+   },
+   "hc_desired_outlet_temp_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Radiator desired outlet temperature",
+    "name_si": "Tadiatorji željena temperatura vtoka",
+    "platform": "sensor",
+    "tag": "2_Temp_zelena_MK_1",
+    "type": "float",
+    "unit": "°C",
+    "value": 0.0
+   },
+   "hc_desired_outlet_temp_2": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor desired outlet temperature",
+    "name_si": "Talno željena temperatura vtoka",
+    "platform": "sensor",
+    "tag": "2_Temp_zelena_MK_2",
+    "type": "float",
+    "unit": "°C",
+    "value": 0.0
+   },
+   "hc_desired_room_temp_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Radiator desired room temperature",
+    "name_si": "Tadiatorji željena prostorska temperatura",
+    "platform": "sensor",
+    "tag": "2_Zahtevana_RF_MK_1",
+    "type": "float",
+    "unit": "°C",
+    "value": 22.0
+   },
+   "hc_desired_room_temp_2": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor desired room temperature",
+    "name_si": "Talno željena prostorska temperatura",
+    "platform": "sensor",
+    "tag": "2_Zahtevana_RF_MK_2",
+    "type": "float",
+    "unit": "°C",
+    "value": 22.5
+   },
+   "hc_max_outlet_temp_heating_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 60.0,
+      "min": 8.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Radiator max outlet temperature heating",
+    "name_si": "Tadiatorji max temperatura vtoka ogrevanje",
+    "platform": "number",
+    "tag": "2_Max_VF_MK1",
+    "type": "float",
+    "unit": "°C",
+    "value": 38.0
+   },
+   "hc_max_outlet_temp_heating_2": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 60.0,
+      "min": 8.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor max outlet temperature heating",
+    "name_si": "Talno max temperatura vtoka ogrevanje",
+    "platform": "number",
+    "tag": "2_Max_VF_MK2",
+    "type": "float",
+    "unit": "°C",
+    "value": 36.0
+   },
+   "hc_min_outlet_temp_cooling_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 40.0,
+      "min": 9.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Radiator min outlet temperature cooling",
+    "name_si": "Tadiatorji min temperatura vtoka hlajenje",
+    "platform": "number",
+    "tag": "2_Min_VF_MK1_HL",
+    "type": "float",
+    "unit": "°C",
+    "value": 18.0
+   },
+   "hc_min_outlet_temp_cooling_2": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 40.0,
+      "min": 9.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor min outlet temperature cooling",
+    "name_si": "Talno min temperatura vtoka hlajenje",
+    "platform": "number",
+    "tag": "2_Min_VF_MK2_HL",
+    "type": "float",
+    "unit": "°C",
+    "value": 18.0
+   },
+   "hc_min_outlet_temp_heating_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 50.0,
+      "min": 8.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Radiator min outlet temperature heating",
+    "name_si": "Tadiatorji min temperatura vtoka ogrevanje",
+    "platform": "number",
+    "tag": "2_Min_VF_MK1",
+    "type": "float",
+    "unit": "°C",
+    "value": 30.0
+   },
+   "hc_min_outlet_temp_heating_2": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 50.0,
+      "min": 8.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor min outlet temperature heating",
+    "name_si": "Talno min temperatura vtoka ogrevanje",
+    "platform": "number",
+    "tag": "2_Min_VF_MK2",
+    "type": "float",
+    "unit": "°C",
+    "value": 30.0
+   },
+   "hc_mix_valve_pos_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Radiator mixing valve position",
+    "name_si": "Tadiatorji odprtost mešalnega ventila",
+    "platform": "sensor",
+    "tag": "2_Odstotki_odprtosti_MP1",
+    "type": "float",
+    "unit": "%",
+    "value": 0.0
+   },
+   "hc_mix_valve_pos_2": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor mixing valve position",
+    "name_si": "Talno odprtost mešalnega ventila",
+    "platform": "sensor",
+    "tag": "2_Odstotki_odprtosti_MP2",
+    "type": "float",
+    "unit": "%",
+    "value": 0.0
+   },
+   "hc_mix_valve_status_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Radiator mixing valve status",
+    "name_si": "Tadiatorji stanje mešalnega ventila",
+    "platform": "sensor",
+    "tag": "2_Delovanje_MP1",
+    "type": "multimode",
+    "unit": null,
+    "value": "off"
+   },
+   "hc_mix_valve_status_2": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor mixing valve status",
+    "name_si": "Talno stanje mešalnega ventila",
+    "platform": "sensor",
+    "tag": "2_Delovanje_MP2",
+    "type": "multimode",
+    "unit": null,
+    "value": "off"
+   },
+   "hc_mode_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Radiator mode of operation",
+    "name_si": "Tadiatorji način delovanja",
+    "platform": "sensor",
+    "tag": "2_Rezim_MK1",
+    "type": "multimode",
+    "unit": null,
+    "value": "heat"
+   },
+   "hc_mode_2": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor mode of operation",
+    "name_si": "Talno način delovanja",
+    "platform": "sensor",
+    "tag": "2_Rezim_MK2",
+    "type": "multimode",
+    "unit": null,
+    "value": "heat"
+   },
+   "hc_name_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Radiator name heating circuit",
+    "name_si": "Tadiatorji ime ogrevalnega kroga",
+    "platform": "excluded",
+    "tag": "MK1_IME",
+    "type": "multimode",
+    "unit": null,
+    "value": "Radiator"
+   },
+   "hc_name_2": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor name heating circuit",
+    "name_si": "Talno ime ogrevalnega kroga",
+    "platform": "excluded",
+    "tag": "MK1_IME(2)",
+    "type": "multimode",
+    "unit": null,
+    "value": "Floor"
+   },
+   "hc_outlet_temp_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Radiator outlet temperature",
+    "name_si": "Tadiatorji temperatura vtoka",
+    "platform": "sensor",
+    "tag": "2_Poti2",
+    "type": "float",
+    "unit": "°C",
+    "value": 30.6
+   },
+   "hc_pump_status_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Radiator pump status",
+    "name_si": "Tadiatorji stanje obtočne črpalke",
+    "platform": "binary_sensor",
+    "tag": "2_Vklop_C1",
+    "type": "boolean",
+    "unit": null,
+    "value": true
+   },
+   "hc_pump_status_2": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor pump status",
+    "name_si": "Talno stanje obtočne črpalke",
+    "platform": "binary_sensor",
+    "tag": "2_Vklop_C2",
+    "type": "boolean",
+    "unit": null,
+    "value": false
+   },
+   "hc_room_temp_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Radiator room temperature",
+    "name_si": "Tadiatorji prostorska temperatura",
+    "platform": "sensor",
+    "tag": "2_Temp_Prostora",
+    "type": "float",
+    "unit": "°C",
+    "value": 21.9
+   },
+   "hc_room_temp_2": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor room temperature",
+    "name_si": "Talno prostorska temperatura",
+    "platform": "sensor",
+    "tag": "2_Temp_RF2",
+    "type": "float",
+    "unit": "°C",
+    "value": 22.9
+   },
+   "hc_turned_on_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Radiator turned on",
+    "name_si": "Tadiatorji vklopljeno",
+    "platform": "excluded",
+    "tag": "2_MK1_vklop",
+    "type": "boolean",
+    "unit": null,
+    "value": true
+   },
+   "hc_turned_on_2": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor turned on",
+    "name_si": "Talno vklopljeno",
+    "platform": "excluded",
+    "tag": "2_MK2_vklop",
+    "type": "boolean",
+    "unit": null,
+    "value": true
+   },
+   "internal_temp": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Internal temperature",
+    "name_si": "Interna temperatura",
+    "platform": "sensor",
+    "tag": "2_Poti1",
+    "type": "float",
+    "unit": "°C",
+    "value": 36.3
+   },
+   "max_power_cooling": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 100.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Max power cooling",
+    "name_si": "Max moč hlajenje",
+    "platform": "number",
+    "tag": "2_Max_moc_TC_pri_HLAJ",
+    "type": "float",
+    "unit": "%",
+    "value": 35.0
+   },
+   "max_power_heating": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 100.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Max power heating",
+    "name_si": "Max moč ogrevanje",
+    "platform": "number",
+    "tag": "2_Max_moc_TC_pri_OGR",
+    "type": "float",
+    "unit": "%",
+    "value": 39.0
+   },
+   "max_power_water": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 100.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Max power hot water",
+    "name_si": "Max moč sanitarna voda",
+    "platform": "number",
+    "tag": "2_Max_moc_TC_pri_SV",
+    "type": "float",
+    "unit": "%",
+    "value": 50.0
+   },
+   "outdoor_temp": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Outside temperature",
+    "name_si": "Zunanja temperatura",
+    "platform": "sensor",
+    "tag": "2_Temp_Zunanja",
+    "type": "float",
+    "unit": "°C",
+    "value": 2.4
+   },
+   "outdoor_unit_power": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Outdoor unit power",
+    "name_si": "Zunanja enota moč",
+    "platform": "sensor",
+    "tag": "2_PRIKAZ_Reg_temp_vode",
+    "type": "float",
+    "unit": "%",
+    "value": 50.0
+   },
+   "outdoor_unit_pump": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Outdoor unit pump",
+    "name_si": "Zunanja enota črpalka",
+    "platform": "binary_sensor",
+    "tag": "2_Vklop_C0",
+    "type": "boolean",
+    "unit": null,
+    "value": true
+   },
+   "timer_programme_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Radiator timer programme",
+    "name_si": "Tadiatorji časovni program",
+    "platform": "excluded",
+    "tag": "2_Izbira_TIMERJA_MK1",
+    "type": "multimode",
+    "unit": null,
+    "value": "24h"
+   },
+   "timer_programme_2": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor timer programme",
+    "name_si": "Talno časovni program",
+    "platform": "excluded",
+    "tag": "2_Izbira_TIMERJA_MK2",
+    "type": "multimode",
+    "unit": null,
+    "value": "24h"
+   },
+   "valve_pos": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Position of 3-way valve",
+    "name_si": "Preklopni ventil",
+    "platform": "sensor",
+    "tag": "2_Preklop_PV1",
+    "type": "multimode",
+    "unit": null,
+    "value": "hot_water"
+   },
+   "wh_desired_temp": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 60.0,
+      "min": 25.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Hot water desired temperature",
+    "name_si": "Sanitarna voda željena temperatura",
+    "platform": "excluded",
+    "tag": "2_Temp_vode_sanitarna",
+    "type": "float",
+    "unit": "°C",
+    "value": 44.0
+   },
+   "wh_on_diff": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 8.0,
+      "min": 0.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Hot water on difference",
+    "name_si": "Sanitarna voda diferenca vklopa",
+    "platform": "number",
+    "tag": "2_Diferenca_vklopa_SV",
+    "type": "float",
+    "unit": "°C",
+    "value": 3.5
+   },
+   "wh_temp_top": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Hot water top",
+    "name_si": "Sanitarna voda zgoraj",
+    "platform": "sensor",
+    "tag": "2_Poti3",
+    "type": "float",
+    "unit": "°C",
+    "value": 36.5
+   },
+   "wh_turned_on": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Hot water enabled",
+    "name_si": "Sanitarna voda vklop",
+    "platform": "excluded",
+    "tag": "2_SV_vklop",
+    "type": "boolean",
+    "unit": null,
+    "value": true
+   }
+  },
+  "circuits": [
+   0,
+   1,
+   2,
+   4,
+   5
+  ],
+  "ha": {
+   "buffer_desired_temp": {
+    "category": null,
+    "domain": "sensor",
+    "state": "38.0",
+    "unit": "°C"
+   },
+   "buffer_high_temp": {
+    "category": "config",
+    "domain": "number",
+    "state": "39.0",
+    "unit": "°C"
+   },
+   "buffer_low_temp": {
+    "category": "config",
+    "domain": "number",
+    "state": "32.0",
+    "unit": "°C"
+   },
+   "buffer_on_diff": {
+    "category": "config",
+    "domain": "number",
+    "state": "2.5",
+    "unit": "°C"
+   },
+   "buffer_temp": {
+    "category": null,
+    "domain": "sensor",
+    "state": "33.6",
+    "unit": "°C"
+   },
+   "current_state": {
+    "category": null,
+    "domain": "sensor",
+    "state": "heating",
+    "unit": null
+   },
+   "desired_internal_temp": {
+    "category": null,
+    "domain": "sensor",
+    "state": "47.0",
+    "unit": "°C"
+   },
+   "electric_heater": {
+    "category": null,
+    "domain": "binary_sensor",
+    "state": "off",
+    "unit": null
+   },
+   "electric_heater_on_temp_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "-10.0",
+    "unit": "°C"
+   },
+   "electric_heater_on_temp_2": {
+    "category": "config",
+    "domain": "number",
+    "state": "-10.0",
+    "unit": "°C"
+   },
+   "electric_heater_on_temp_3": {
+    "category": "config",
+    "domain": "number",
+    "state": "-10.0",
+    "unit": "°C"
+   },
+   "hc_curve_shift_paralell_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "0.0",
+    "unit": null
+   },
+   "hc_curve_shift_paralell_2": {
+    "category": "config",
+    "domain": "number",
+    "state": "0.0",
+    "unit": null
+   },
+   "hc_curve_shift_slope_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "0.0",
+    "unit": null
+   },
+   "hc_curve_shift_slope_2": {
+    "category": "config",
+    "domain": "number",
+    "state": "0.0",
+    "unit": null
+   },
+   "hc_desired_outlet_temp_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "0.0",
+    "unit": "°C"
+   },
+   "hc_desired_outlet_temp_2": {
+    "category": null,
+    "domain": "sensor",
+    "state": "0.0",
+    "unit": "°C"
+   },
+   "hc_desired_room_temp_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "22.0",
+    "unit": "°C"
+   },
+   "hc_desired_room_temp_2": {
+    "category": null,
+    "domain": "sensor",
+    "state": "22.5",
+    "unit": "°C"
+   },
+   "hc_max_outlet_temp_heating_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "38.0",
+    "unit": "°C"
+   },
+   "hc_max_outlet_temp_heating_2": {
+    "category": "config",
+    "domain": "number",
+    "state": "36.0",
+    "unit": "°C"
+   },
+   "hc_min_outlet_temp_cooling_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "18.0",
+    "unit": "°C"
+   },
+   "hc_min_outlet_temp_cooling_2": {
+    "category": "config",
+    "domain": "number",
+    "state": "18.0",
+    "unit": "°C"
+   },
+   "hc_min_outlet_temp_heating_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "30.0",
+    "unit": "°C"
+   },
+   "hc_min_outlet_temp_heating_2": {
+    "category": "config",
+    "domain": "number",
+    "state": "30.0",
+    "unit": "°C"
+   },
+   "hc_mix_valve_pos_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "0.0",
+    "unit": "%"
+   },
+   "hc_mix_valve_pos_2": {
+    "category": null,
+    "domain": "sensor",
+    "state": "0.0",
+    "unit": "%"
+   },
+   "hc_mix_valve_status_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "off",
+    "unit": null
+   },
+   "hc_mix_valve_status_2": {
+    "category": null,
+    "domain": "sensor",
+    "state": "off",
+    "unit": null
+   },
+   "hc_mode_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "heat",
+    "unit": null
+   },
+   "hc_mode_2": {
+    "category": null,
+    "domain": "sensor",
+    "state": "heat",
+    "unit": null
+   },
+   "hc_outlet_temp_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "30.6",
+    "unit": "°C"
+   },
+   "hc_pump_status_1": {
+    "category": null,
+    "domain": "binary_sensor",
+    "state": "on",
+    "unit": null
+   },
+   "hc_pump_status_2": {
+    "category": null,
+    "domain": "binary_sensor",
+    "state": "off",
+    "unit": null
+   },
+   "hc_room_temp_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "21.9",
+    "unit": "°C"
+   },
+   "hc_room_temp_2": {
+    "category": null,
+    "domain": "sensor",
+    "state": "22.9",
+    "unit": "°C"
+   },
+   "internal_temp": {
+    "category": null,
+    "domain": "sensor",
+    "state": "36.3",
+    "unit": "°C"
+   },
+   "max_power_cooling": {
+    "category": "config",
+    "domain": "number",
+    "state": "35.0",
+    "unit": "%"
+   },
+   "max_power_heating": {
+    "category": "config",
+    "domain": "number",
+    "state": "39.0",
+    "unit": "%"
+   },
+   "max_power_water": {
+    "category": "config",
+    "domain": "number",
+    "state": "50.0",
+    "unit": "%"
+   },
+   "outdoor_temp": {
+    "category": null,
+    "domain": "sensor",
+    "state": "2.4",
+    "unit": "°C"
+   },
+   "outdoor_unit_power": {
+    "category": null,
+    "domain": "sensor",
+    "state": "50.0",
+    "unit": "%"
+   },
+   "outdoor_unit_pump": {
+    "category": null,
+    "domain": "binary_sensor",
+    "state": "on",
+    "unit": null
+   },
+   "valve_pos": {
+    "category": null,
+    "domain": "sensor",
+    "state": "hot_water",
+    "unit": null
+   },
+   "water_heater": {
+    "category": null,
+    "domain": "water_heater",
+    "state": "heating",
+    "unit": null
+   },
+   "wh_on_diff": {
+    "category": "config",
+    "domain": "number",
+    "state": "3.5",
+    "unit": "°C"
+   },
+   "wh_temp_top": {
+    "category": null,
+    "domain": "sensor",
+    "state": "36.5",
+    "unit": "°C"
+   }
+  },
+  "writes": [
+   [
+    "2_Temp_prostor_dnevna",
+    "220"
+   ],
+   [
+    "2_Temp_prostor_nocna",
+    "210"
+   ],
+   [
+    "2_MK1_vklop",
+    "1"
+   ],
+   [
+    "2_Zamik_krivulje_MK1",
+    "0"
+   ],
+   [
+    "2_Nagib_krivulje_MK1",
+    "0"
+   ],
+   [
+    "2_Max_VF_MK1",
+    "380"
+   ],
+   [
+    "2_Min_VF_MK1",
+    "300"
+   ],
+   [
+    "2_Min_VF_MK1_HL",
+    "180"
+   ],
+   [
+    "2_Temp_prostor_dnevna_OK2",
+    "225"
+   ],
+   [
+    "2_Temp_prostor_nocna_OK2",
+    "210"
+   ],
+   [
+    "2_MK2_vklop",
+    "1"
+   ],
+   [
+    "2_Zamik_krivulje_MK2",
+    "0"
+   ],
+   [
+    "2_Nagib_krivulje_MK2",
+    "0"
+   ],
+   [
+    "2_Max_VF_MK2",
+    "360"
+   ],
+   [
+    "2_Min_VF_MK2",
+    "300"
+   ],
+   [
+    "2_Min_VF_MK2_HL",
+    "180"
+   ],
+   [
+    "2_Max_moc_TC_pri_OGR",
+    "390"
+   ],
+   [
+    "2_Max_moc_TC_pri_HLAJ",
+    "350"
+   ],
+   [
+    "2_Max_moc_TC_pri_SV",
+    "500"
+   ],
+   [
+    "2_Zun_temp_za_vklop_Grelec_1",
+    "-100"
+   ],
+   [
+    "2_Zun_temp_za_vklop_Grelec_2",
+    "-100"
+   ],
+   [
+    "2_Zun_temp_za_vklop_Grelec_3",
+    "-100"
+   ],
+   [
+    "2_SV_vklop",
+    "1"
+   ],
+   [
+    "2_Temp_vode_sanitarna",
+    "440"
+   ],
+   [
+    "2_Diferenca_vklopa_SV",
+    "35"
+   ],
+   [
+    "2_VISJA_Temp_ZALOG_OGR",
+    "390"
+   ],
+   [
+    "2_NIZJA_Temp_ZALOG_OGR",
+    "320"
+   ],
+   [
+    "2_Diferenca_vklopa_ZALOG",
+    "25"
+   ]
+  ]
+ },
+ "no_room_sensor": {
+  "api": {
+   "current_state": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Current state",
+    "name_si": "Stanje delovanja",
+    "platform": "sensor",
+    "tag": "2_Rezim_delov_TC",
+    "type": "multimode",
+    "unit": null,
+    "value": "idle"
+   },
+   "desired_internal_temp": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Internal desired temperature",
+    "name_si": "Interna tarčna temperatura",
+    "platform": "sensor",
+    "tag": "2_Izrac_temp_TC",
+    "type": "float",
+    "unit": "°C",
+    "value": 9.0
+   },
+   "electric_heater": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Electric heater",
+    "name_si": "Delovanje električnega grelca",
+    "platform": "binary_sensor",
+    "tag": "2_Vklop_ele_grelca_1",
+    "type": "boolean",
+    "unit": null,
+    "value": false
+   },
+   "electric_heater_on_temp_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 10.0,
+      "min": -30.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Electric heater level 1",
+    "name_si": "Vklop električnega grelca stopnja 1",
+    "platform": "number",
+    "tag": "2_Zun_temp_za_vklop_Grelec_1",
+    "type": "float",
+    "unit": "°C",
+    "value": -10.0
+   },
+   "electric_heater_on_temp_2": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 10.0,
+      "min": -30.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Electric heater level 2",
+    "name_si": "Vklop električnega grelca stopnja 2",
+    "platform": "number",
+    "tag": "2_Zun_temp_za_vklop_Grelec_2",
+    "type": "float",
+    "unit": "°C",
+    "value": -10.0
+   },
+   "electric_heater_on_temp_3": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 10.0,
+      "min": -30.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Electric heater level 3",
+    "name_si": "Vklop električnega grelca stopnja 3",
+    "platform": "number",
+    "tag": "2_Zun_temp_za_vklop_Grelec_3",
+    "type": "float",
+    "unit": "°C",
+    "value": -10.0
+   },
+   "hc_curve_shift_paralell_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 9.9,
+      "min": -9.9,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor parallel curve shift",
+    "name_si": "Talno vzporedna korekcija krivulje",
+    "platform": "number",
+    "tag": "2_Zamik_krivulje_MK1",
+    "type": "float",
+    "unit": "",
+    "value": 0.0
+   },
+   "hc_curve_shift_slope_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 9.9,
+      "min": -9.9,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor slope curve shift",
+    "name_si": "Talno korekcija nagiba krivulje",
+    "platform": "number",
+    "tag": "2_Nagib_krivulje_MK1",
+    "type": "float",
+    "unit": "",
+    "value": 0.0
+   },
+   "hc_desired_day_temp_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 35.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor desired day temperature",
+    "name_si": "Talno željena dnevna temperatura",
+    "platform": "excluded",
+    "tag": "2_Temp_prostor_dnevna",
+    "type": "float",
+    "unit": "°C",
+    "value": 20.1
+   },
+   "hc_desired_night_temp_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 35.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor desired night temperature",
+    "name_si": "Talno željena nočna temperatura",
+    "platform": "excluded",
+    "tag": "2_Temp_prostor_nocna",
+    "type": "float",
+    "unit": "°C",
+    "value": 18.4
+   },
+   "hc_desired_outlet_temp_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor desired outlet temperature",
+    "name_si": "Talno željena temperatura vtoka",
+    "platform": "sensor",
+    "tag": "2_Temp_zelena_MK_1",
+    "type": "float",
+    "unit": "°C",
+    "value": 0.0
+   },
+   "hc_desired_room_temp_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor desired room temperature",
+    "name_si": "Talno željena prostorska temperatura",
+    "platform": "sensor",
+    "tag": "2_Zahtevana_RF_MK_1",
+    "type": "float",
+    "unit": "°C",
+    "value": 20.1
+   },
+   "hc_max_outlet_temp_heating_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 60.0,
+      "min": 8.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor max outlet temperature heating",
+    "name_si": "Talno max temperatura vtoka ogrevanje",
+    "platform": "number",
+    "tag": "2_Max_VF_MK1",
+    "type": "float",
+    "unit": "°C",
+    "value": 40.0
+   },
+   "hc_min_outlet_temp_cooling_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 40.0,
+      "min": 9.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor min outlet temperature cooling",
+    "name_si": "Talno min temperatura vtoka hlajenje",
+    "platform": "number",
+    "tag": "2_Min_VF_MK1_HL",
+    "type": "float",
+    "unit": "°C",
+    "value": 18.0
+   },
+   "hc_min_outlet_temp_heating_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 50.0,
+      "min": 8.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Floor min outlet temperature heating",
+    "name_si": "Talno min temperatura vtoka ogrevanje",
+    "platform": "number",
+    "tag": "2_Min_VF_MK1",
+    "type": "float",
+    "unit": "°C",
+    "value": 27.0
+   },
+   "hc_mix_valve_pos_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor mixing valve position",
+    "name_si": "Talno odprtost mešalnega ventila",
+    "platform": "sensor",
+    "tag": "2_Odstotki_odprtosti_MP1",
+    "type": "float",
+    "unit": "%",
+    "value": 0.0
+   },
+   "hc_mix_valve_status_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor mixing valve status",
+    "name_si": "Talno stanje mešalnega ventila",
+    "platform": "sensor",
+    "tag": "2_Delovanje_MP1",
+    "type": "multimode",
+    "unit": null,
+    "value": "off"
+   },
+   "hc_mode_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor mode of operation",
+    "name_si": "Talno način delovanja",
+    "platform": "sensor",
+    "tag": "2_Rezim_MK1",
+    "type": "multimode",
+    "unit": null,
+    "value": "heat"
+   },
+   "hc_name_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor name heating circuit",
+    "name_si": "Talno ime ogrevalnega kroga",
+    "platform": "excluded",
+    "tag": "MK1_IME",
+    "type": "multimode",
+    "unit": null,
+    "value": "Floor"
+   },
+   "hc_outlet_temp_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor outlet temperature",
+    "name_si": "Talno temperatura vtoka",
+    "platform": "sensor",
+    "tag": "2_Poti2",
+    "type": "float",
+    "unit": "°C",
+    "value": 20.7
+   },
+   "hc_pump_status_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor pump status",
+    "name_si": "Talno stanje obtočne črpalke",
+    "platform": "binary_sensor",
+    "tag": "2_Vklop_C1",
+    "type": "boolean",
+    "unit": null,
+    "value": false
+   },
+   "hc_turned_on_1": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor turned on",
+    "name_si": "Talno vklopljeno",
+    "platform": "excluded",
+    "tag": "2_MK1_vklop",
+    "type": "boolean",
+    "unit": null,
+    "value": true
+   },
+   "internal_temp": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Internal temperature",
+    "name_si": "Interna temperatura",
+    "platform": "sensor",
+    "tag": "2_Poti1",
+    "type": "float",
+    "unit": "°C",
+    "value": 25.5
+   },
+   "max_power_cooling": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 100.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Max power cooling",
+    "name_si": "Max moč hlajenje",
+    "platform": "number",
+    "tag": "2_Max_moc_TC_pri_HLAJ",
+    "type": "float",
+    "unit": "%",
+    "value": 35.0
+   },
+   "max_power_heating": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 100.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Max power heating",
+    "name_si": "Max moč ogrevanje",
+    "platform": "number",
+    "tag": "2_Max_moc_TC_pri_OGR",
+    "type": "float",
+    "unit": "%",
+    "value": 100.0
+   },
+   "max_power_water": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 100.0,
+      "min": 10.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Max power hot water",
+    "name_si": "Max moč sanitarna voda",
+    "platform": "number",
+    "tag": "2_Max_moc_TC_pri_SV",
+    "type": "float",
+    "unit": "%",
+    "value": 57.0
+   },
+   "outdoor_temp": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Outside temperature",
+    "name_si": "Zunanja temperatura",
+    "platform": "sensor",
+    "tag": "2_Temp_Zunanja",
+    "type": "float",
+    "unit": "°C",
+    "value": 6.0
+   },
+   "outdoor_unit_power": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Outdoor unit power",
+    "name_si": "Zunanja enota moč",
+    "platform": "sensor",
+    "tag": "2_PRIKAZ_Reg_temp_vode",
+    "type": "float",
+    "unit": "%",
+    "value": 0.0
+   },
+   "outdoor_unit_pump": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Outdoor unit pump",
+    "name_si": "Zunanja enota črpalka",
+    "platform": "binary_sensor",
+    "tag": "2_Vklop_C0",
+    "type": "boolean",
+    "unit": null,
+    "value": false
+   },
+   "timer_programme_1": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Floor timer programme",
+    "name_si": "Talno časovni program",
+    "platform": "excluded",
+    "tag": "2_Izbira_TIMERJA_MK1",
+    "type": "multimode",
+    "unit": null,
+    "value": "24h"
+   },
+   "valve_pos": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Position of 3-way valve",
+    "name_si": "Preklopni ventil",
+    "platform": "sensor",
+    "tag": "2_Preklop_PV1",
+    "type": "multimode",
+    "unit": null,
+    "value": "hot_water"
+   },
+   "wh_desired_temp": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 60.0,
+      "min": 25.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Hot water desired temperature",
+    "name_si": "Sanitarna voda željena temperatura",
+    "platform": "excluded",
+    "tag": "2_Temp_vode_sanitarna",
+    "type": "float",
+    "unit": "°C",
+    "value": 44.5
+   },
+   "wh_on_diff": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 8.0,
+      "min": 0.0,
+      "step": 0.1
+     }
+    },
+    "name_en": "Hot water on difference",
+    "name_si": "Sanitarna voda diferenca vklopa",
+    "platform": "number",
+    "tag": "2_Diferenca_vklopa_SV",
+    "type": "float",
+    "unit": "°C",
+    "value": 4.0
+   },
+   "wh_temp_bottom": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Hot water bottom",
+    "name_si": "Sanitarna voda spodaj",
+    "platform": "sensor",
+    "tag": "2_Poti4",
+    "type": "float",
+    "unit": "°C",
+    "value": 42.1
+   },
+   "wh_temp_top": {
+    "adjustable": {
+     "enabled": false,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Hot water top",
+    "name_si": "Sanitarna voda zgoraj",
+    "platform": "sensor",
+    "tag": "2_Poti3",
+    "type": "float",
+    "unit": "°C",
+    "value": 43.0
+   },
+   "wh_turned_on": {
+    "adjustable": {
+     "enabled": true,
+     "range": {
+      "max": 0.0,
+      "min": 0.0,
+      "step": 0.0
+     }
+    },
+    "name_en": "Hot water enabled",
+    "name_si": "Sanitarna voda vklop",
+    "platform": "excluded",
+    "tag": "2_SV_vklop",
+    "type": "boolean",
+    "unit": null,
+    "value": true
+   }
+  },
+  "circuits": [
+   0,
+   1,
+   4
+  ],
+  "ha": {
+   "current_state": {
+    "category": null,
+    "domain": "sensor",
+    "state": "idle",
+    "unit": null
+   },
+   "desired_internal_temp": {
+    "category": null,
+    "domain": "sensor",
+    "state": "9.0",
+    "unit": "°C"
+   },
+   "electric_heater": {
+    "category": null,
+    "domain": "binary_sensor",
+    "state": "off",
+    "unit": null
+   },
+   "electric_heater_on_temp_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "-10.0",
+    "unit": "°C"
+   },
+   "electric_heater_on_temp_2": {
+    "category": "config",
+    "domain": "number",
+    "state": "-10.0",
+    "unit": "°C"
+   },
+   "electric_heater_on_temp_3": {
+    "category": "config",
+    "domain": "number",
+    "state": "-10.0",
+    "unit": "°C"
+   },
+   "hc_curve_shift_paralell_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "0.0",
+    "unit": null
+   },
+   "hc_curve_shift_slope_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "0.0",
+    "unit": null
+   },
+   "hc_desired_outlet_temp_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "0.0",
+    "unit": "°C"
+   },
+   "hc_desired_room_temp_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "20.1",
+    "unit": "°C"
+   },
+   "hc_max_outlet_temp_heating_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "40.0",
+    "unit": "°C"
+   },
+   "hc_min_outlet_temp_cooling_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "18.0",
+    "unit": "°C"
+   },
+   "hc_min_outlet_temp_heating_1": {
+    "category": "config",
+    "domain": "number",
+    "state": "27.0",
+    "unit": "°C"
+   },
+   "hc_mix_valve_pos_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "0.0",
+    "unit": "%"
+   },
+   "hc_mix_valve_status_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "off",
+    "unit": null
+   },
+   "hc_mode_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "heat",
+    "unit": null
+   },
+   "hc_outlet_temp_1": {
+    "category": null,
+    "domain": "sensor",
+    "state": "20.7",
+    "unit": "°C"
+   },
+   "hc_pump_status_1": {
+    "category": null,
+    "domain": "binary_sensor",
+    "state": "off",
+    "unit": null
+   },
+   "internal_temp": {
+    "category": null,
+    "domain": "sensor",
+    "state": "25.5",
+    "unit": "°C"
+   },
+   "max_power_cooling": {
+    "category": "config",
+    "domain": "number",
+    "state": "35.0",
+    "unit": "%"
+   },
+   "max_power_heating": {
+    "category": "config",
+    "domain": "number",
+    "state": "100.0",
+    "unit": "%"
+   },
+   "max_power_water": {
+    "category": "config",
+    "domain": "number",
+    "state": "57.0",
+    "unit": "%"
+   },
+   "outdoor_temp": {
+    "category": null,
+    "domain": "sensor",
+    "state": "6.0",
+    "unit": "°C"
+   },
+   "outdoor_unit_power": {
+    "category": null,
+    "domain": "sensor",
+    "state": "0.0",
+    "unit": "%"
+   },
+   "outdoor_unit_pump": {
+    "category": null,
+    "domain": "binary_sensor",
+    "state": "off",
+    "unit": null
+   },
+   "valve_pos": {
+    "category": null,
+    "domain": "sensor",
+    "state": "hot_water",
+    "unit": null
+   },
+   "water_heater": {
+    "category": null,
+    "domain": "water_heater",
+    "state": "idle",
+    "unit": null
+   },
+   "wh_on_diff": {
+    "category": "config",
+    "domain": "number",
+    "state": "4.0",
+    "unit": "°C"
+   },
+   "wh_temp_bottom": {
+    "category": null,
+    "domain": "sensor",
+    "state": "42.1",
+    "unit": "°C"
+   },
+   "wh_temp_top": {
+    "category": null,
+    "domain": "sensor",
+    "state": "43.0",
+    "unit": "°C"
+   }
+  },
+  "writes": [
+   [
+    "2_Temp_prostor_dnevna",
+    "201"
+   ],
+   [
+    "2_Temp_prostor_nocna",
+    "184"
+   ],
+   [
+    "2_MK1_vklop",
+    "1"
+   ],
+   [
+    "2_Zamik_krivulje_MK1",
+    "0"
+   ],
+   [
+    "2_Nagib_krivulje_MK1",
+    "0"
+   ],
+   [
+    "2_Max_VF_MK1",
+    "400"
+   ],
+   [
+    "2_Min_VF_MK1",
+    "270"
+   ],
+   [
+    "2_Min_VF_MK1_HL",
+    "180"
+   ],
+   [
+    "2_Max_moc_TC_pri_OGR",
+    "1000"
+   ],
+   [
+    "2_Max_moc_TC_pri_HLAJ",
+    "350"
+   ],
+   [
+    "2_Max_moc_TC_pri_SV",
+    "570"
+   ],
+   [
+    "2_Zun_temp_za_vklop_Grelec_1",
+    "-100"
+   ],
+   [
+    "2_Zun_temp_za_vklop_Grelec_2",
+    "-100"
+   ],
+   [
+    "2_Zun_temp_za_vklop_Grelec_3",
+    "-100"
+   ],
+   [
+    "2_SV_vklop",
+    "1"
+   ],
+   [
+    "2_Temp_vode_sanitarna",
+    "445"
+   ],
+   [
+    "2_Diferenca_vklopa_SV",
+    "40"
+   ]
+  ]
+ }
+}

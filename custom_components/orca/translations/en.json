@@ -1,0 +1,36 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+        },
+        "error": {
+            "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+            "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+            "unknown": "[%key:common::config_flow::error::unknown%]"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "hostname": "Hostname",
+                    "password": "Password",
+                    "username": "Username"
+                }
+            }
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "description": "Warning, do not change automatically detected circuits unless the integration failed to select correct circuits.",
+                "data": {
+                    "language": "Language",
+                    "circuit_1": "Heating Circuit 1",
+                    "circuit_2": "Heating Circuit 2",
+                    "circuit_3": "Solar",
+                    "circuit_4": "Domestic Hot Water",
+                    "circuit_5": "Buffer Tank"
+                }
+            }
+        }
+    }
+}

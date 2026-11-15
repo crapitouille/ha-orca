@@ -1,0 +1,3722 @@
+# This file is read by orca_api.py to configure the various sensors
+# Function fetch_all will return all sensors defined here
+# Functions for fetching specific tags/ids can only return sensors defined here
+# Each sensor must have a unique combination of 'id' and 'heating_circuit'
+# Unique ID for circuits 1 and 2 are constructed from 'id' and 'heating_circuit' in orca_api.py
+#
+# Definitions:
+# tag: tag name, must match the tag from the orca heat pump, check developer resources
+# id: internal id used by orca_api.py to identify the sensor
+# name.en: English name of the sensor
+# name.si: Slovenian name of the sensor
+# description: description of the sensor
+# type: type of the sensor, defines how to interpret the value, must be one of "boolean", "float", "integer", "multimode"
+# unit: unit of the sensor value, must be defined for float types, optional for integer types
+# value_map: mapping of raw values to human-readable values, must be defined for multimode types
+# adjustable.enabled: whether the sensor value can be adjusted
+# adjustable.range: range and step of adjustable values, must be defined for adjustable float types
+# heating_circuit: which heating circuit the sensor belongs to (0 for internal sensors, 4 for hot water, 3 for solar collectors)
+
+- tag: MK1_IME
+  id: hc_name
+  name:
+    en: "name heating circuit"
+    si: "ime ogrevalnega kroga"
+  description: ""
+  type: "multimode"
+  value_map: # first three are default names, typically indicate unconfigured circuit
+    1: "Circuit"
+    2: "Unset"
+    4: "Heating Circuit 2"
+    5: "Heating Circuit 3"
+    6: "Direct Circuit 1"
+    7: "Direct Circuit 2"
+    8: "Direct Circuit 3"
+    9: "Cellar"
+    10: "Ground Floor"
+    11: "Floor"
+    12: "1. Floor"
+    13: "2. Floor"
+    14: "Attic"
+    15: "Radiator"
+    16: "Floor"
+    17: "Convector"
+    18: "Heating"
+    19: "Cooling"
+    20: "Wall"
+    21: "Heating Circuit 1"
+    23: "Floor"
+    24: "Radiator"
+  adjustable:
+    enabled: false
+  heating_circuit: 1
+
+- tag: 2_Temp_Prostora
+  id: hc_room_temp
+  name:
+    en: "room temperature"
+    si: "prostorska temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 1
+
+- tag: 2_Zahtevana_RF_MK_1
+  id: hc_desired_room_temp
+  name:
+    en: "desired room temperature"
+    si: "željena prostorska temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 1
+
+- tag: 2_Temp_prostor_dnevna
+  id: hc_desired_day_temp
+  name:
+    en: "desired day temperature"
+    si: "željena dnevna temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 10.0
+      max: 35.0
+      step: 0.1
+  heating_circuit: 1
+
+- tag: 2_Temp_prostor_nocna
+  id: hc_desired_night_temp
+  name:
+    en: "desired night temperature"
+    si: "željena nočna temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 10.0
+      max: 35.0
+      step: 0.1
+  heating_circuit: 1
+
+- tag: 2_Poti2
+  id: hc_outlet_temp
+  name:
+    en: "outlet temperature"
+    si: "temperatura vtoka"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 1
+
+- tag: 2_Temp_zelena_MK_1
+  id: hc_desired_outlet_temp
+  name:
+    en: "desired outlet temperature"
+    si: "željena temperatura vtoka"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 1
+
+- tag: 2_Delovanje_MP1 # 1= "Odpiranje" # 2= "Zapiranje" # 0= "Izklop"
+  id: hc_mix_valve_status
+  name:
+    en: "mixing valve status"
+    si: "stanje mešalnega ventila"
+  description: "Motor nastavlja mešalni ventil, da je temp vtoka čim bližje željeni temp"
+  type: "multimode"
+  value_map:
+    0: "off"
+    1: "opening"
+    2: "closing"
+  adjustable:
+    enabled: false
+  heating_circuit: 1
+
+- tag: 2_Odstotki_odprtosti_MP1
+  id: hc_mix_valve_pos
+  name:
+    en: "mixing valve position"
+    si: "odprtost mešalnega ventila"
+  description: "Motor nastavlja mešalni ventil, da je temp vtoka čim bližje željeni temp"
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: false
+  heating_circuit: 1
+
+- tag: 2_Vklop_C1
+  id: hc_pump_status
+  name:
+    en: "pump status"
+    si: "stanje obtočne črpalke"
+  description: "Poganja vodo za gretje"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 1
+
+- tag: 2_Rezim_MK1
+  id: hc_mode
+  name:
+    en: "mode of operation"
+    si: "način delovanja"
+  description: ""
+  type: "multimode"
+  value_map:
+    1: "heat"
+    2: "cool"
+    3: "auto"
+    4: "external_input_id2"
+    5: "manual"
+  adjustable:
+    enabled: false
+  heating_circuit: 1
+
+- tag: 2_Izbira_TIMERJA_MK1
+  id: timer_programme
+  name:
+    en: "timer programme"
+    si: "časovni program"
+  description: ""
+  type: "multimode"
+  value_map:
+    0: "24h"
+    1: "program 1"
+    2: "program 2"
+    3: "program 3"
+    4: "program 4"
+    5: "program 5"
+  adjustable:
+    enabled: false
+  heating_circuit: 1
+
+- tag: 2_MK1_vklop
+  id: hc_turned_on
+  name:
+    en: "turned on"
+    si: "vklopljeno"
+  description: "Ali je ogrevanje/hlajenje vklopljeno"
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 1
+
+- tag: 2_Zamik_krivulje_MK1
+  id: hc_curve_shift_paralell
+  name:
+    en: "parallel curve shift"
+    si: "vzporedna korekcija krivulje"
+  description: ""
+  type: "float"
+  unit: ""
+  adjustable:
+    enabled: true
+    range:
+      min: -9.9
+      max: 9.9
+      step: 0.1
+  heating_circuit: 1
+
+- tag: 2_Nagib_krivulje_MK1
+  id: hc_curve_shift_slope
+  name:
+    en: "slope curve shift"
+    si: "korekcija nagiba krivulje"
+  description: ""
+  type: float
+  unit: ""
+  adjustable:
+    enabled: true
+    range:
+      min: -9.9
+      max: 9.9
+      step: 0.1
+  heating_circuit: 1
+
+- tag: 2_Max_VF_MK1
+  id: hc_max_outlet_temp_heating
+  name:
+    en: "max outlet temperature heating"
+    si: "max temperatura vtoka ogrevanje"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 8.0
+      max: 60.0
+      step: 0.1
+  heating_circuit: 1
+
+- tag: 2_Min_VF_MK1
+  id: hc_min_outlet_temp_heating
+  name:
+    en: "min outlet temperature heating"
+    si: "min temperatura vtoka ogrevanje"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 8.0
+      max: 50.0
+      step: 0.1
+  heating_circuit: 1
+
+- tag: 2_Min_VF_MK1_HL
+  id: hc_min_outlet_temp_cooling
+  name:
+    en: "min outlet temperature cooling"
+    si: "min temperatura vtoka hlajenje"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 9.0
+      max: 40.0
+      step: 0.1
+  heating_circuit: 1
+
+## Heating loop 2 (Orgrevalni krog 2)
+- tag: MK1_IME(2)
+  id: hc_name
+  name:
+    en: "name heating circuit"
+    si: "ime ogrevalnega kroga"
+  description: ""
+  type: "multimode"
+  value_map:
+    1: "Circuit"
+    2: "Unset"
+    4: "Heating Circuit 2"
+    5: "Heating Circuit 3"
+    6: "Direct Circuit 1"
+    7: "Direct Circuit 2"
+    8: "Direct Circuit 3"
+    9: "Cellar"
+    10: "Ground Floor"
+    11: "Floor"
+    12: "1. Floor"
+    13: "2. Floor"
+    14: "Attic"
+    15: "Radiator"
+    16: "Floor"
+    17: "Convector"
+    18: "Heating"
+    19: "Cooling"
+    20: "Wall"
+    21: "Heating Circuit 1"
+    23: "Floor"
+    24: "Radiator"
+  adjustable:
+    enabled: false
+  heating_circuit: 2
+
+- tag: 2_Temp_RF2
+  id: hc_room_temp
+  name:
+    en: "room temperature"
+    si: "prostorska temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 2
+
+- tag: 2_Zahtevana_RF_MK_2
+  id: hc_desired_room_temp
+  name:
+    en: "desired room temperature"
+    si: "željena prostorska temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 2
+
+- tag: 2_Temp_prostor_dnevna_OK2
+  id: hc_desired_day_temp
+  name:
+    en: "desired day temperature"
+    si: "željena dnevna temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 10.0
+      max: 35.0
+      step: 0.1
+  heating_circuit: 2
+
+- tag: 2_Temp_prostor_nocna_OK2
+  id: hc_desired_night_temp
+  name:
+    en: "desired night temperature"
+    si: "željena nočna temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 10.0
+      max: 35.0
+      step: 0.1
+  heating_circuit: 2
+
+- tag: 2_Temp_VF2
+  id: hc_outlet_temp
+  name:
+    en: "outlet temperature"
+    si: "temperatura vtoka"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 2
+
+- tag: 2_Temp_zelena_MK_2
+  id: hc_desired_outlet_temp
+  name:
+    en: "desired outlet temperature"
+    si: "željena temperatura vtoka"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 2
+
+- tag: 2_Delovanje_MP2
+  id: hc_mix_valve_status
+  name:
+    en: "mixing valve status"
+    si: "stanje mešalnega ventila"
+  description: "Motor nastavlja mešalni ventil, da je temp vtoka čim bližje željeni temp"
+  type: "multimode"
+  value_map:
+    0: "off"
+    1: "opening"
+    2: "closing"
+  adjustable:
+    enabled: false
+  heating_circuit: 2
+
+- tag: 2_Odstotki_odprtosti_MP2
+  id: hc_mix_valve_pos
+  name:
+    en: "mixing valve position"
+    si: "odprtost mešalnega ventila"
+  description: "Motor nastavlja mešalni ventil, da je temp vtoka čim bližje željeni temp"
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: false
+  heating_circuit: 2
+
+- tag: 2_Vklop_C2
+  id: hc_pump_status
+  name:
+    en: "pump status"
+    si: "stanje obtočne črpalke"
+  description: "Poganja vodo za gretje"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 2
+
+- tag: 2_Rezim_MK2
+  id: hc_mode
+  name:
+    en: "mode of operation"
+    si: "način delovanja"
+  description: ""
+  type: "multimode"
+  value_map:
+    1: "heat"
+    2: "cool"
+    3: "auto"
+    4: "external_input_id2"
+    5: "manual"
+  adjustable:
+    enabled: false
+  heating_circuit: 2
+
+- tag: 2_Izbira_TIMERJA_MK2
+  id: timer_programme
+  name:
+    en: "timer programme"
+    si: "časovni program"
+  description: ""
+  type: "multimode"
+  value_map:
+    0: "24h"
+    1: "program 1"
+    2: "program 2"
+    3: "program 3"
+    4: "program 4"
+    5: "program 5"
+  adjustable:
+    enabled: false
+  heating_circuit: 2
+
+- tag: 2_MK2_vklop
+  id: hc_turned_on
+  name:
+    en: "turned on"
+    si: "vklopljeno"
+  description: "Ali je ogrevanje/hlajenje vklopljeno"
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 2
+
+- tag: 2_Zamik_krivulje_MK2
+  id: hc_curve_shift_paralell
+  name:
+    en: "parallel curve shift"
+    si: "vzporedna korekcija krivulje"
+  description: ""
+  type: float
+  unit: ""
+  adjustable:
+    enabled: true
+    range:
+      min: -9.9
+      max: 9.9
+      step: 0.1
+  heating_circuit: 2
+
+- tag: 2_Nagib_krivulje_MK2
+  id: hc_curve_shift_slope
+  name:
+    en: "slope curve shift"
+    si: "korekcija nagiba krivulje"
+  description: ""
+  type: float
+  unit: ""
+  adjustable:
+    enabled: true
+    range:
+      min: -9.9
+      max: 9.9
+      step: 0.1
+  heating_circuit: 2
+
+- tag: 2_Max_VF_MK2
+  id: hc_max_outlet_temp_heating
+  name:
+    en: "max outlet temperature heating"
+    si: "max temperatura vtoka ogrevanje"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 8.0
+      max: 60.0
+      step: 0.1
+  heating_circuit: 2
+
+- tag: 2_Min_VF_MK2
+  id: hc_min_outlet_temp_heating
+  name:
+    en: "min outlet temperature heating"
+    si: "min temperatura vtoka ogrevanje"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 8.0
+      max: 50.0
+      step: 0.1
+  heating_circuit: 2
+
+- tag: 2_Min_VF_MK2_HL
+  id: hc_min_outlet_temp_cooling
+  name:
+    en: "min outlet temperature cooling"
+    si: "min temperatura vtoka hlajenje"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 9.0
+      max: 40.0
+      step: 0.1
+  heating_circuit: 2
+
+
+## Internal sensors ##
+- tag: 2_Temp_Zunanja
+  id: outdoor_temp
+  name:
+    en: "outside temperature"
+    si: "zunanja temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Poti1
+  id: internal_temp
+  name:
+    en: "internal temperature"
+    si: "interna temperatura"
+  description: "Temperatura plina v TC"
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Izrac_temp_TC
+  id: desired_internal_temp
+  name:
+    en: "internal desired temperature"
+    si: "interna tarčna temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_PRIKAZ_Reg_temp_vode
+  id: outdoor_unit_power
+  name:
+    en: "outdoor unit power"
+    si: "zunanja enota moč"
+  description: ""
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Preklop_PV1
+  id: valve_pos
+  name:
+    en: "position of 3-way valve"
+    si: "preklopni ventil"
+  description: "Preklaplja med sistemom ogrevanja sanitarne vode in gretja"
+  type: "multimode"
+  value_map:
+    0: "room_heating"
+    1: "hot_water"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Vklop_C0
+  id: outdoor_unit_pump
+  name:
+    en: "outdoor unit pump"
+    si: "zunanja enota črpalka"
+  description: "Poganja vodo čez zunanjo enoto"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Vklop_ele_grelca_1
+  id: electric_heater
+  name:
+    en: "electric heater"
+    si: "delovanje električnega grelca"
+  description: "Za odtaljevanje zunanje enote"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Rezim_delov_TC
+  id: current_state
+  name:
+    en: "current state"
+    si: "stanje delovanja"
+  description: ""
+  type: "multimode"
+  value_map:
+    0: "idle"
+    1: "heating"
+    2: "cooling"
+    3: "defrost"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Max_moc_TC_pri_OGR
+  id: max_power_heating
+  name:
+    en: "max power heating"
+    si: "max moč ogrevanje"
+  description: ""
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: true
+    range:
+      min: 10.0
+      max: 100.0
+      step: 0.1
+  heating_circuit: 0
+
+- tag: 2_Max_moc_TC_pri_HLAJ
+  id: max_power_cooling
+  name:
+    en: "max power cooling"
+    si: "max moč hlajenje"
+  description: ""
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: true
+    range:
+      min: 10.0
+      max: 100.0
+      step: 0.1
+  heating_circuit: 0
+
+- tag: 2_Max_moc_TC_pri_SV
+  id: max_power_water
+  name:
+    en: "max power hot water"
+    si: "max moč sanitarna voda"
+  description: ""
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: true
+    range:
+      min: 10.0
+      max: 100.0
+      step: 0.1
+  heating_circuit: 0
+
+- tag: 2_Zun_temp_za_vklop_Grelec_1
+  id: electric_heater_on_temp_1
+  name:
+    en: "electric heater level 1"
+    si: "vklop električnega grelca stopnja 1"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: -30.0
+      max: 10.0
+      step: 0.1
+  heating_circuit: 0
+
+- tag: 2_Zun_temp_za_vklop_Grelec_2
+  id: electric_heater_on_temp_2
+  name:
+    en: "electric heater level 2"
+    si: "vklop električnega grelca stopnja 2"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: -30.0
+      max: 10.0
+      step: 0.1
+  heating_circuit: 0
+
+- tag: 2_Zun_temp_za_vklop_Grelec_3
+  id: electric_heater_on_temp_3
+  name:
+    en: "electric heater level 3"
+    si: "vklop električnega grelca stopnja 3"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: -30.0
+      max: 10.0
+      step: 0.1
+  heating_circuit: 0
+
+## Hot Water (not really a heating circuit, but is defined as such to remove results if someone doesnt have it) ##
+- tag: 2_SV_vklop
+  id: wh_turned_on
+  name:
+    en: "hot water enabled"
+    si: "sanitarna voda vklop"
+  description: "Ali je ogrevanje sanitarne vode vklopljeno"
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 4
+
+- tag: 2_Poti3
+  id: wh_temp_top
+  name:
+    en: "hot water top"
+    si: "sanitarna voda zgoraj"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 4
+
+- tag: 2_Poti4
+  id: wh_temp_bottom
+  name:
+    en: "hot water bottom"
+    si: "sanitarna voda spodaj"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 4
+
+- tag: 2_Temp_vode_sanitarna
+  id: wh_desired_temp
+  name:
+    en: "hot water desired temperature"
+    si: "sanitarna voda željena temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 25.0
+      max: 60.0
+      step: 0.1
+  heating_circuit: 4
+
+- tag: 2_Diferenca_vklopa_SV
+  id: wh_on_diff
+  name:
+    en: "hot water on difference"
+    si: "sanitarna voda diferenca vklopa"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 0.0
+      max: 8.0
+      step: 0.1
+  heating_circuit: 4
+
+## Solar collectors (ogrevalni krog 3) ##
+- tag: 2_SOLAR_VKLOP
+  id: wh_solar_turned_on
+  name:
+    en: "solar heating"
+    si: "sončna energija"
+  description: "Ali je ogrevanje sanitarne vode s sončno energijo vklopljeno"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 3
+
+- tag: 2_Vklop_C3
+  id: wh_solar_pump
+  name:
+    en: "solar pump"
+    si: "sončna energija črpalka"
+  description: "Poganja vodo skozi sončne kolektorje"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 3
+
+- tag: 2_Poti5
+  id: wh_solar_temp
+  name:
+    en: "solar collector temperature"
+    si: "sončni kolektorji temperatura"
+  description: "Temperatura senzorja na sončnih kolektorjih"
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 3
+
+## Buffer tank - zalogovnik, simulated heating circuit 5 ##
+- tag: 2_Temp_Zalog
+  id: buffer_temp
+  name:
+    en: "buffer temperature"
+    si: "zalogovnik temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 5
+
+- tag: 2_Izrac_temp_ZALOG
+  id: buffer_desired_temp
+  name:
+    en: "buffer desired temperature"
+    si: "zalogovnik željena temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: false
+  heating_circuit: 5
+
+- tag: 2_VISJA_Temp_ZALOG_OGR
+  id: buffer_high_temp
+  name:
+    en: "buffer high temperature"
+    si: "zalogovnik višja temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 15.0
+      max: 55.0
+      step: 0.1
+  heating_circuit: 5
+
+- tag: 2_NIZJA_Temp_ZALOG_OGR
+  id: buffer_low_temp
+  name:
+    en: "buffer low temperature"
+    si: "zalogovnik nižja temperatura"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 15.0
+      max: 55.0
+      step: 0.1
+  heating_circuit: 5
+
+- tag: 2_Diferenca_vklopa_ZALOG
+  id: buffer_on_diff
+  name:
+    en: "buffer on difference"
+    si: "zalogovnik diferenca vklopa"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 0.0
+      max: 9.0
+      step: 0.1
+  heating_circuit: 5
+
+## circuit 99: Tags used for validation and internal use - not visible in orca_api output or in home assistant
+- tag: 2_Shema_MK1
+  id: shema1_1
+  name:
+    en: ""
+    si: ""
+  description: "Indicates presence of HC 1"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 99
+
+- tag: 2_Shema_DK1
+  id: shema1_2
+  name:
+    en: ""
+    si: ""
+  description: "Indicates presence of HC 1"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 99
+
+- tag: 2_PogojPGDT_Shema_OK1
+  id: shema1_3
+  name:
+    en: ""
+    si: ""
+  description: "Indicates presence of HC 1 - present also on newer orca models"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 99
+
+- tag: 2_Shema_MK2
+  id: shema2_1
+  name:
+    en: ""
+    si: ""
+  description: "Indicates presence of HC 2"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 99
+
+- tag: 2_Shema_DK2
+  id: shema2_2
+  name:
+    en: ""
+    si: ""
+  description: "Indicates presence of HC 2"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 99
+
+- tag: 2_PogojPGDT_Shema_OK2
+  id: shema2_3
+  name:
+    en: ""
+    si: ""
+  description: "Indicates presence of HC 2 - present also on newer orca models"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 99
+
+- tag: 2_Shema_SOLAR
+  id: shema3
+  name:
+    en: ""
+    si: ""
+  description: "Indicates presence of HC 3"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 99
+
+- tag: 2_Shema_SV
+  id: shema4
+  name:
+    en: ""
+    si: ""
+  description: "Indicates presence of HC 4"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 99
+
+- tag: 2_Shema_ZALOG
+  id: shema5
+  name:
+    en: ""
+    si: ""
+  description: "Indicates presence of HC 5"
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 99
+################################################################################
+# Added families: timer programmes, anti-legionella, alarms, power and flow,
+# operating hours, holiday mode.
+# Type "integer" = whole number sent and received as is (hours, minutes, days),
+# unlike "float" which is a single-decimal value stored x10.
+################################################################################
+
+## Timer programmes 1-5 (casovniki), 3 periods each
+
+- tag: 2_TIMER_1_Ura_ON_1
+  id: timer1_p1_on_hour
+  name:
+    en: "timer 1 period 1 on hour"
+    si: "časovnik 1 obdobje 1 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Minute_ON_1
+  id: timer1_p1_on_minute
+  name:
+    en: "timer 1 period 1 on minute"
+    si: "časovnik 1 obdobje 1 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Ura_OFF_1
+  id: timer1_p1_off_hour
+  name:
+    en: "timer 1 period 1 off hour"
+    si: "časovnik 1 obdobje 1 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Minute_OFF_1
+  id: timer1_p1_off_minute
+  name:
+    en: "timer 1 period 1 off minute"
+    si: "časovnik 1 obdobje 1 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Ponedeljek_1
+  id: timer1_p1_mon
+  name:
+    en: "timer 1 period 1 monday"
+    si: "časovnik 1 obdobje 1 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Torek_1
+  id: timer1_p1_tue
+  name:
+    en: "timer 1 period 1 tuesday"
+    si: "časovnik 1 obdobje 1 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Sreda_1
+  id: timer1_p1_wed
+  name:
+    en: "timer 1 period 1 wednesday"
+    si: "časovnik 1 obdobje 1 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Cetrtek_1
+  id: timer1_p1_thu
+  name:
+    en: "timer 1 period 1 thursday"
+    si: "časovnik 1 obdobje 1 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Petek_1
+  id: timer1_p1_fri
+  name:
+    en: "timer 1 period 1 friday"
+    si: "časovnik 1 obdobje 1 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Sobota_1
+  id: timer1_p1_sat
+  name:
+    en: "timer 1 period 1 saturday"
+    si: "časovnik 1 obdobje 1 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Nedelja_1
+  id: timer1_p1_sun
+  name:
+    en: "timer 1 period 1 sunday"
+    si: "časovnik 1 obdobje 1 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Ura_ON_2
+  id: timer1_p2_on_hour
+  name:
+    en: "timer 1 period 2 on hour"
+    si: "časovnik 1 obdobje 2 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Minute_ON_2
+  id: timer1_p2_on_minute
+  name:
+    en: "timer 1 period 2 on minute"
+    si: "časovnik 1 obdobje 2 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Ura_OFF_2
+  id: timer1_p2_off_hour
+  name:
+    en: "timer 1 period 2 off hour"
+    si: "časovnik 1 obdobje 2 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Minute_OFF_2
+  id: timer1_p2_off_minute
+  name:
+    en: "timer 1 period 2 off minute"
+    si: "časovnik 1 obdobje 2 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Ponedeljek_2
+  id: timer1_p2_mon
+  name:
+    en: "timer 1 period 2 monday"
+    si: "časovnik 1 obdobje 2 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Torek_2
+  id: timer1_p2_tue
+  name:
+    en: "timer 1 period 2 tuesday"
+    si: "časovnik 1 obdobje 2 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Sreda_2
+  id: timer1_p2_wed
+  name:
+    en: "timer 1 period 2 wednesday"
+    si: "časovnik 1 obdobje 2 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Cetrtek_2
+  id: timer1_p2_thu
+  name:
+    en: "timer 1 period 2 thursday"
+    si: "časovnik 1 obdobje 2 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Petek_2
+  id: timer1_p2_fri
+  name:
+    en: "timer 1 period 2 friday"
+    si: "časovnik 1 obdobje 2 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Sobota_2
+  id: timer1_p2_sat
+  name:
+    en: "timer 1 period 2 saturday"
+    si: "časovnik 1 obdobje 2 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Nedelja_2
+  id: timer1_p2_sun
+  name:
+    en: "timer 1 period 2 sunday"
+    si: "časovnik 1 obdobje 2 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Ura_ON_3
+  id: timer1_p3_on_hour
+  name:
+    en: "timer 1 period 3 on hour"
+    si: "časovnik 1 obdobje 3 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Minute_ON_3
+  id: timer1_p3_on_minute
+  name:
+    en: "timer 1 period 3 on minute"
+    si: "časovnik 1 obdobje 3 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Ura_OFF_3
+  id: timer1_p3_off_hour
+  name:
+    en: "timer 1 period 3 off hour"
+    si: "časovnik 1 obdobje 3 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Minute_OFF_3
+  id: timer1_p3_off_minute
+  name:
+    en: "timer 1 period 3 off minute"
+    si: "časovnik 1 obdobje 3 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Ponedeljek_3
+  id: timer1_p3_mon
+  name:
+    en: "timer 1 period 3 monday"
+    si: "časovnik 1 obdobje 3 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Torek_3
+  id: timer1_p3_tue
+  name:
+    en: "timer 1 period 3 tuesday"
+    si: "časovnik 1 obdobje 3 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Sreda_3
+  id: timer1_p3_wed
+  name:
+    en: "timer 1 period 3 wednesday"
+    si: "časovnik 1 obdobje 3 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Cetrtek_3
+  id: timer1_p3_thu
+  name:
+    en: "timer 1 period 3 thursday"
+    si: "časovnik 1 obdobje 3 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Petek_3
+  id: timer1_p3_fri
+  name:
+    en: "timer 1 period 3 friday"
+    si: "časovnik 1 obdobje 3 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Sobota_3
+  id: timer1_p3_sat
+  name:
+    en: "timer 1 period 3 saturday"
+    si: "časovnik 1 obdobje 3 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_1_Nedelja_3
+  id: timer1_p3_sun
+  name:
+    en: "timer 1 period 3 sunday"
+    si: "časovnik 1 obdobje 3 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Ura_ON_1
+  id: timer2_p1_on_hour
+  name:
+    en: "timer 2 period 1 on hour"
+    si: "časovnik 2 obdobje 1 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Minute_ON_1
+  id: timer2_p1_on_minute
+  name:
+    en: "timer 2 period 1 on minute"
+    si: "časovnik 2 obdobje 1 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Ura_OFF_1
+  id: timer2_p1_off_hour
+  name:
+    en: "timer 2 period 1 off hour"
+    si: "časovnik 2 obdobje 1 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Minute_OFF_1
+  id: timer2_p1_off_minute
+  name:
+    en: "timer 2 period 1 off minute"
+    si: "časovnik 2 obdobje 1 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Ponedeljek_1
+  id: timer2_p1_mon
+  name:
+    en: "timer 2 period 1 monday"
+    si: "časovnik 2 obdobje 1 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Torek_1
+  id: timer2_p1_tue
+  name:
+    en: "timer 2 period 1 tuesday"
+    si: "časovnik 2 obdobje 1 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Sreda_1
+  id: timer2_p1_wed
+  name:
+    en: "timer 2 period 1 wednesday"
+    si: "časovnik 2 obdobje 1 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Cetrtek_1
+  id: timer2_p1_thu
+  name:
+    en: "timer 2 period 1 thursday"
+    si: "časovnik 2 obdobje 1 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Petek_1
+  id: timer2_p1_fri
+  name:
+    en: "timer 2 period 1 friday"
+    si: "časovnik 2 obdobje 1 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Sobota_1
+  id: timer2_p1_sat
+  name:
+    en: "timer 2 period 1 saturday"
+    si: "časovnik 2 obdobje 1 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Nedelja_1
+  id: timer2_p1_sun
+  name:
+    en: "timer 2 period 1 sunday"
+    si: "časovnik 2 obdobje 1 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Ura_ON_2
+  id: timer2_p2_on_hour
+  name:
+    en: "timer 2 period 2 on hour"
+    si: "časovnik 2 obdobje 2 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Minute_ON_2
+  id: timer2_p2_on_minute
+  name:
+    en: "timer 2 period 2 on minute"
+    si: "časovnik 2 obdobje 2 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Ura_OFF_2
+  id: timer2_p2_off_hour
+  name:
+    en: "timer 2 period 2 off hour"
+    si: "časovnik 2 obdobje 2 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Minute_OFF_2
+  id: timer2_p2_off_minute
+  name:
+    en: "timer 2 period 2 off minute"
+    si: "časovnik 2 obdobje 2 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Ponedeljek_2
+  id: timer2_p2_mon
+  name:
+    en: "timer 2 period 2 monday"
+    si: "časovnik 2 obdobje 2 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Torek_2
+  id: timer2_p2_tue
+  name:
+    en: "timer 2 period 2 tuesday"
+    si: "časovnik 2 obdobje 2 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Sreda_2
+  id: timer2_p2_wed
+  name:
+    en: "timer 2 period 2 wednesday"
+    si: "časovnik 2 obdobje 2 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Cetrtek_2
+  id: timer2_p2_thu
+  name:
+    en: "timer 2 period 2 thursday"
+    si: "časovnik 2 obdobje 2 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Petek_2
+  id: timer2_p2_fri
+  name:
+    en: "timer 2 period 2 friday"
+    si: "časovnik 2 obdobje 2 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Sobota_2
+  id: timer2_p2_sat
+  name:
+    en: "timer 2 period 2 saturday"
+    si: "časovnik 2 obdobje 2 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Nedelja_2
+  id: timer2_p2_sun
+  name:
+    en: "timer 2 period 2 sunday"
+    si: "časovnik 2 obdobje 2 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Ura_ON_3
+  id: timer2_p3_on_hour
+  name:
+    en: "timer 2 period 3 on hour"
+    si: "časovnik 2 obdobje 3 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Minute_ON_3
+  id: timer2_p3_on_minute
+  name:
+    en: "timer 2 period 3 on minute"
+    si: "časovnik 2 obdobje 3 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Ura_OFF_3
+  id: timer2_p3_off_hour
+  name:
+    en: "timer 2 period 3 off hour"
+    si: "časovnik 2 obdobje 3 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Minute_OFF_3
+  id: timer2_p3_off_minute
+  name:
+    en: "timer 2 period 3 off minute"
+    si: "časovnik 2 obdobje 3 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Ponedeljek_3
+  id: timer2_p3_mon
+  name:
+    en: "timer 2 period 3 monday"
+    si: "časovnik 2 obdobje 3 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Torek_3
+  id: timer2_p3_tue
+  name:
+    en: "timer 2 period 3 tuesday"
+    si: "časovnik 2 obdobje 3 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Sreda_3
+  id: timer2_p3_wed
+  name:
+    en: "timer 2 period 3 wednesday"
+    si: "časovnik 2 obdobje 3 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Cetrtek_3
+  id: timer2_p3_thu
+  name:
+    en: "timer 2 period 3 thursday"
+    si: "časovnik 2 obdobje 3 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Petek_3
+  id: timer2_p3_fri
+  name:
+    en: "timer 2 period 3 friday"
+    si: "časovnik 2 obdobje 3 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Sobota_3
+  id: timer2_p3_sat
+  name:
+    en: "timer 2 period 3 saturday"
+    si: "časovnik 2 obdobje 3 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_2_Nedelja_3
+  id: timer2_p3_sun
+  name:
+    en: "timer 2 period 3 sunday"
+    si: "časovnik 2 obdobje 3 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Ura_ON_1
+  id: timer3_p1_on_hour
+  name:
+    en: "timer 3 period 1 on hour"
+    si: "časovnik 3 obdobje 1 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Minute_ON_1
+  id: timer3_p1_on_minute
+  name:
+    en: "timer 3 period 1 on minute"
+    si: "časovnik 3 obdobje 1 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Ura_OFF_1
+  id: timer3_p1_off_hour
+  name:
+    en: "timer 3 period 1 off hour"
+    si: "časovnik 3 obdobje 1 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Minute_OFF_1
+  id: timer3_p1_off_minute
+  name:
+    en: "timer 3 period 1 off minute"
+    si: "časovnik 3 obdobje 1 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Ponedeljek_1
+  id: timer3_p1_mon
+  name:
+    en: "timer 3 period 1 monday"
+    si: "časovnik 3 obdobje 1 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Torek_1
+  id: timer3_p1_tue
+  name:
+    en: "timer 3 period 1 tuesday"
+    si: "časovnik 3 obdobje 1 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Sreda_1
+  id: timer3_p1_wed
+  name:
+    en: "timer 3 period 1 wednesday"
+    si: "časovnik 3 obdobje 1 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Cetrtek_1
+  id: timer3_p1_thu
+  name:
+    en: "timer 3 period 1 thursday"
+    si: "časovnik 3 obdobje 1 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Petek_1
+  id: timer3_p1_fri
+  name:
+    en: "timer 3 period 1 friday"
+    si: "časovnik 3 obdobje 1 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Sobota_1
+  id: timer3_p1_sat
+  name:
+    en: "timer 3 period 1 saturday"
+    si: "časovnik 3 obdobje 1 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Nedelja_1
+  id: timer3_p1_sun
+  name:
+    en: "timer 3 period 1 sunday"
+    si: "časovnik 3 obdobje 1 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Ura_ON_2
+  id: timer3_p2_on_hour
+  name:
+    en: "timer 3 period 2 on hour"
+    si: "časovnik 3 obdobje 2 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Minute_ON_2
+  id: timer3_p2_on_minute
+  name:
+    en: "timer 3 period 2 on minute"
+    si: "časovnik 3 obdobje 2 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Ura_OFF_2
+  id: timer3_p2_off_hour
+  name:
+    en: "timer 3 period 2 off hour"
+    si: "časovnik 3 obdobje 2 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Minute_OFF_2
+  id: timer3_p2_off_minute
+  name:
+    en: "timer 3 period 2 off minute"
+    si: "časovnik 3 obdobje 2 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Ponedeljek_2
+  id: timer3_p2_mon
+  name:
+    en: "timer 3 period 2 monday"
+    si: "časovnik 3 obdobje 2 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Torek_2
+  id: timer3_p2_tue
+  name:
+    en: "timer 3 period 2 tuesday"
+    si: "časovnik 3 obdobje 2 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Sreda_2
+  id: timer3_p2_wed
+  name:
+    en: "timer 3 period 2 wednesday"
+    si: "časovnik 3 obdobje 2 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Cetrtek_2
+  id: timer3_p2_thu
+  name:
+    en: "timer 3 period 2 thursday"
+    si: "časovnik 3 obdobje 2 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Petek_2
+  id: timer3_p2_fri
+  name:
+    en: "timer 3 period 2 friday"
+    si: "časovnik 3 obdobje 2 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Sobota_2
+  id: timer3_p2_sat
+  name:
+    en: "timer 3 period 2 saturday"
+    si: "časovnik 3 obdobje 2 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Nedelja_2
+  id: timer3_p2_sun
+  name:
+    en: "timer 3 period 2 sunday"
+    si: "časovnik 3 obdobje 2 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Ura_ON_3
+  id: timer3_p3_on_hour
+  name:
+    en: "timer 3 period 3 on hour"
+    si: "časovnik 3 obdobje 3 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Minute_ON_3
+  id: timer3_p3_on_minute
+  name:
+    en: "timer 3 period 3 on minute"
+    si: "časovnik 3 obdobje 3 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Ura_OFF_3
+  id: timer3_p3_off_hour
+  name:
+    en: "timer 3 period 3 off hour"
+    si: "časovnik 3 obdobje 3 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Minute_OFF_3
+  id: timer3_p3_off_minute
+  name:
+    en: "timer 3 period 3 off minute"
+    si: "časovnik 3 obdobje 3 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Ponedeljek_3
+  id: timer3_p3_mon
+  name:
+    en: "timer 3 period 3 monday"
+    si: "časovnik 3 obdobje 3 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Torek_3
+  id: timer3_p3_tue
+  name:
+    en: "timer 3 period 3 tuesday"
+    si: "časovnik 3 obdobje 3 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Sreda_3
+  id: timer3_p3_wed
+  name:
+    en: "timer 3 period 3 wednesday"
+    si: "časovnik 3 obdobje 3 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Cetrtek_3
+  id: timer3_p3_thu
+  name:
+    en: "timer 3 period 3 thursday"
+    si: "časovnik 3 obdobje 3 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Petek_3
+  id: timer3_p3_fri
+  name:
+    en: "timer 3 period 3 friday"
+    si: "časovnik 3 obdobje 3 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Sobota_3
+  id: timer3_p3_sat
+  name:
+    en: "timer 3 period 3 saturday"
+    si: "časovnik 3 obdobje 3 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_3_Nedelja_3
+  id: timer3_p3_sun
+  name:
+    en: "timer 3 period 3 sunday"
+    si: "časovnik 3 obdobje 3 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Ura_ON_1
+  id: timer4_p1_on_hour
+  name:
+    en: "timer 4 period 1 on hour"
+    si: "časovnik 4 obdobje 1 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Minute_ON_1
+  id: timer4_p1_on_minute
+  name:
+    en: "timer 4 period 1 on minute"
+    si: "časovnik 4 obdobje 1 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Ura_OFF_1
+  id: timer4_p1_off_hour
+  name:
+    en: "timer 4 period 1 off hour"
+    si: "časovnik 4 obdobje 1 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Minute_OFF_1
+  id: timer4_p1_off_minute
+  name:
+    en: "timer 4 period 1 off minute"
+    si: "časovnik 4 obdobje 1 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Ponedeljek_1
+  id: timer4_p1_mon
+  name:
+    en: "timer 4 period 1 monday"
+    si: "časovnik 4 obdobje 1 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Torek_1
+  id: timer4_p1_tue
+  name:
+    en: "timer 4 period 1 tuesday"
+    si: "časovnik 4 obdobje 1 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Sreda_1
+  id: timer4_p1_wed
+  name:
+    en: "timer 4 period 1 wednesday"
+    si: "časovnik 4 obdobje 1 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Cetrtek_1
+  id: timer4_p1_thu
+  name:
+    en: "timer 4 period 1 thursday"
+    si: "časovnik 4 obdobje 1 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Petek_1
+  id: timer4_p1_fri
+  name:
+    en: "timer 4 period 1 friday"
+    si: "časovnik 4 obdobje 1 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Sobota_1
+  id: timer4_p1_sat
+  name:
+    en: "timer 4 period 1 saturday"
+    si: "časovnik 4 obdobje 1 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Nedelja_1
+  id: timer4_p1_sun
+  name:
+    en: "timer 4 period 1 sunday"
+    si: "časovnik 4 obdobje 1 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Ura_ON_2
+  id: timer4_p2_on_hour
+  name:
+    en: "timer 4 period 2 on hour"
+    si: "časovnik 4 obdobje 2 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Minute_ON_2
+  id: timer4_p2_on_minute
+  name:
+    en: "timer 4 period 2 on minute"
+    si: "časovnik 4 obdobje 2 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Ura_OFF_2
+  id: timer4_p2_off_hour
+  name:
+    en: "timer 4 period 2 off hour"
+    si: "časovnik 4 obdobje 2 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Minute_OFF_2
+  id: timer4_p2_off_minute
+  name:
+    en: "timer 4 period 2 off minute"
+    si: "časovnik 4 obdobje 2 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Ponedeljek_2
+  id: timer4_p2_mon
+  name:
+    en: "timer 4 period 2 monday"
+    si: "časovnik 4 obdobje 2 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Torek_2
+  id: timer4_p2_tue
+  name:
+    en: "timer 4 period 2 tuesday"
+    si: "časovnik 4 obdobje 2 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Sreda_2
+  id: timer4_p2_wed
+  name:
+    en: "timer 4 period 2 wednesday"
+    si: "časovnik 4 obdobje 2 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Cetrtek_2
+  id: timer4_p2_thu
+  name:
+    en: "timer 4 period 2 thursday"
+    si: "časovnik 4 obdobje 2 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Petek_2
+  id: timer4_p2_fri
+  name:
+    en: "timer 4 period 2 friday"
+    si: "časovnik 4 obdobje 2 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Sobota_2
+  id: timer4_p2_sat
+  name:
+    en: "timer 4 period 2 saturday"
+    si: "časovnik 4 obdobje 2 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Nedelja_2
+  id: timer4_p2_sun
+  name:
+    en: "timer 4 period 2 sunday"
+    si: "časovnik 4 obdobje 2 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Ura_ON_3
+  id: timer4_p3_on_hour
+  name:
+    en: "timer 4 period 3 on hour"
+    si: "časovnik 4 obdobje 3 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Minute_ON_3
+  id: timer4_p3_on_minute
+  name:
+    en: "timer 4 period 3 on minute"
+    si: "časovnik 4 obdobje 3 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Ura_OFF_3
+  id: timer4_p3_off_hour
+  name:
+    en: "timer 4 period 3 off hour"
+    si: "časovnik 4 obdobje 3 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Minute_OFF_3
+  id: timer4_p3_off_minute
+  name:
+    en: "timer 4 period 3 off minute"
+    si: "časovnik 4 obdobje 3 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Ponedeljek_3
+  id: timer4_p3_mon
+  name:
+    en: "timer 4 period 3 monday"
+    si: "časovnik 4 obdobje 3 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Torek_3
+  id: timer4_p3_tue
+  name:
+    en: "timer 4 period 3 tuesday"
+    si: "časovnik 4 obdobje 3 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Sreda_3
+  id: timer4_p3_wed
+  name:
+    en: "timer 4 period 3 wednesday"
+    si: "časovnik 4 obdobje 3 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Cetrtek_3
+  id: timer4_p3_thu
+  name:
+    en: "timer 4 period 3 thursday"
+    si: "časovnik 4 obdobje 3 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Petek_3
+  id: timer4_p3_fri
+  name:
+    en: "timer 4 period 3 friday"
+    si: "časovnik 4 obdobje 3 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Sobota_3
+  id: timer4_p3_sat
+  name:
+    en: "timer 4 period 3 saturday"
+    si: "časovnik 4 obdobje 3 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_4_Nedelja_3
+  id: timer4_p3_sun
+  name:
+    en: "timer 4 period 3 sunday"
+    si: "časovnik 4 obdobje 3 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Ura_ON_1
+  id: timer5_p1_on_hour
+  name:
+    en: "timer 5 period 1 on hour"
+    si: "časovnik 5 obdobje 1 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Minute_ON_1
+  id: timer5_p1_on_minute
+  name:
+    en: "timer 5 period 1 on minute"
+    si: "časovnik 5 obdobje 1 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Ura_OFF_1
+  id: timer5_p1_off_hour
+  name:
+    en: "timer 5 period 1 off hour"
+    si: "časovnik 5 obdobje 1 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Minute_OFF_1
+  id: timer5_p1_off_minute
+  name:
+    en: "timer 5 period 1 off minute"
+    si: "časovnik 5 obdobje 1 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Ponedeljek_1
+  id: timer5_p1_mon
+  name:
+    en: "timer 5 period 1 monday"
+    si: "časovnik 5 obdobje 1 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Torek_1
+  id: timer5_p1_tue
+  name:
+    en: "timer 5 period 1 tuesday"
+    si: "časovnik 5 obdobje 1 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Sreda_1
+  id: timer5_p1_wed
+  name:
+    en: "timer 5 period 1 wednesday"
+    si: "časovnik 5 obdobje 1 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Cetrtek_1
+  id: timer5_p1_thu
+  name:
+    en: "timer 5 period 1 thursday"
+    si: "časovnik 5 obdobje 1 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Petek_1
+  id: timer5_p1_fri
+  name:
+    en: "timer 5 period 1 friday"
+    si: "časovnik 5 obdobje 1 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Sobota_1
+  id: timer5_p1_sat
+  name:
+    en: "timer 5 period 1 saturday"
+    si: "časovnik 5 obdobje 1 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Nedelja_1
+  id: timer5_p1_sun
+  name:
+    en: "timer 5 period 1 sunday"
+    si: "časovnik 5 obdobje 1 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Ura_ON_2
+  id: timer5_p2_on_hour
+  name:
+    en: "timer 5 period 2 on hour"
+    si: "časovnik 5 obdobje 2 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Minute_ON_2
+  id: timer5_p2_on_minute
+  name:
+    en: "timer 5 period 2 on minute"
+    si: "časovnik 5 obdobje 2 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Ura_OFF_2
+  id: timer5_p2_off_hour
+  name:
+    en: "timer 5 period 2 off hour"
+    si: "časovnik 5 obdobje 2 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Minute_OFF_2
+  id: timer5_p2_off_minute
+  name:
+    en: "timer 5 period 2 off minute"
+    si: "časovnik 5 obdobje 2 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Ponedeljek_2
+  id: timer5_p2_mon
+  name:
+    en: "timer 5 period 2 monday"
+    si: "časovnik 5 obdobje 2 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Torek_2
+  id: timer5_p2_tue
+  name:
+    en: "timer 5 period 2 tuesday"
+    si: "časovnik 5 obdobje 2 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Sreda_2
+  id: timer5_p2_wed
+  name:
+    en: "timer 5 period 2 wednesday"
+    si: "časovnik 5 obdobje 2 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Cetrtek_2
+  id: timer5_p2_thu
+  name:
+    en: "timer 5 period 2 thursday"
+    si: "časovnik 5 obdobje 2 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Petek_2
+  id: timer5_p2_fri
+  name:
+    en: "timer 5 period 2 friday"
+    si: "časovnik 5 obdobje 2 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Sobota_2
+  id: timer5_p2_sat
+  name:
+    en: "timer 5 period 2 saturday"
+    si: "časovnik 5 obdobje 2 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Nedelja_2
+  id: timer5_p2_sun
+  name:
+    en: "timer 5 period 2 sunday"
+    si: "časovnik 5 obdobje 2 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Ura_ON_3
+  id: timer5_p3_on_hour
+  name:
+    en: "timer 5 period 3 on hour"
+    si: "časovnik 5 obdobje 3 ura vklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Minute_ON_3
+  id: timer5_p3_on_minute
+  name:
+    en: "timer 5 period 3 on minute"
+    si: "časovnik 5 obdobje 3 minuta vklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Ura_OFF_3
+  id: timer5_p3_off_hour
+  name:
+    en: "timer 5 period 3 off hour"
+    si: "časovnik 5 obdobje 3 ura izklopa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Minute_OFF_3
+  id: timer5_p3_off_minute
+  name:
+    en: "timer 5 period 3 off minute"
+    si: "časovnik 5 obdobje 3 minuta izklopa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Ponedeljek_3
+  id: timer5_p3_mon
+  name:
+    en: "timer 5 period 3 monday"
+    si: "časovnik 5 obdobje 3 ponedeljek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Torek_3
+  id: timer5_p3_tue
+  name:
+    en: "timer 5 period 3 tuesday"
+    si: "časovnik 5 obdobje 3 torek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Sreda_3
+  id: timer5_p3_wed
+  name:
+    en: "timer 5 period 3 wednesday"
+    si: "časovnik 5 obdobje 3 sreda"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Cetrtek_3
+  id: timer5_p3_thu
+  name:
+    en: "timer 5 period 3 thursday"
+    si: "časovnik 5 obdobje 3 četrtek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Petek_3
+  id: timer5_p3_fri
+  name:
+    en: "timer 5 period 3 friday"
+    si: "časovnik 5 obdobje 3 petek"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Sobota_3
+  id: timer5_p3_sat
+  name:
+    en: "timer 5 period 3 saturday"
+    si: "časovnik 5 obdobje 3 sobota"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_TIMER_5_Nedelja_3
+  id: timer5_p3_sun
+  name:
+    en: "timer 5 period 3 sunday"
+    si: "časovnik 5 obdobje 3 nedelja"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+## Timer programme selection
+
+- tag: 2_Izbira_TIMERJA_SV
+  id: wh_timer_programme
+  name:
+    en: "hot water timer programme"
+    si: "časovni program sanitarne vode"
+  description: ""
+  type: "multimode"
+  value_map:
+    0: "24h"
+    1: "program 1"
+    2: "program 2"
+    3: "program 3"
+    4: "program 4"
+    5: "program 5"
+  adjustable:
+    enabled: false
+  heating_circuit: 4
+
+- tag: 2_Izbira_TIMERJA_ZALOG
+  id: buffer_timer_programme
+  name:
+    en: "buffer timer programme"
+    si: "časovni program zalogovnika"
+  description: ""
+  type: "multimode"
+  value_map:
+    0: "24h"
+    1: "program 1"
+    2: "program 2"
+    3: "program 3"
+    4: "program 4"
+    5: "program 5"
+  adjustable:
+    enabled: false
+  heating_circuit: 5
+
+- tag: 2_Izbira_TIMERJA_TISJE
+  id: silent_timer_programme
+  name:
+    en: "silent mode timer programme"
+    si: "časovni program tihega delovanja"
+  description: ""
+  type: "multimode"
+  value_map:
+    0: "24h"
+    1: "program 1"
+    2: "program 2"
+    3: "program 3"
+    4: "program 4"
+    5: "program 5"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+## Anti-legionella programme (protilegionelni program)
+
+- tag: 2_Legionela_vklop
+  id: legionella_turned_on
+  name:
+    en: "legionella programme"
+    si: "protilegionelni program"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 4
+
+- tag: 2_Temperatura_legionela
+  id: legionella_temp
+  name:
+    en: "legionella temperature"
+    si: "temperatura protilegionelnega programa"
+  description: ""
+  type: "float"
+  unit: "°C"
+  adjustable:
+    enabled: true
+    range:
+      min: 60.0
+      max: 65.0
+      step: 0.5
+  heating_circuit: 4
+
+- tag: 2_On_Dan_Legionella
+  id: legionella_day
+  name:
+    en: "legionella start day"
+    si: "dan pričetka protilegionelnega programa"
+  description: "1-7, dan v tednu"
+  type: "integer"
+  unit: ""
+  adjustable:
+    enabled: true
+    range:
+      min: 1
+      max: 7
+      step: 1
+  heating_circuit: 4
+
+- tag: 2_On_Ura_Legionella
+  id: legionella_hour
+  name:
+    en: "legionella start hour"
+    si: "ura pričetka protilegionelnega programa"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 23
+      step: 1
+  heating_circuit: 4
+
+- tag: 2_On_Min_Legionella
+  id: legionella_minute
+  name:
+    en: "legionella start minute"
+    si: "minuta pričetka protilegionelnega programa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 59
+      step: 1
+  heating_circuit: 4
+
+- tag: 2_Legionela_Cikel
+  id: legionella_cycle
+  name:
+    en: "legionella cycle"
+    si: "cikel protilegionelnega programa"
+  description: ""
+  type: "integer"
+  unit: ""
+  adjustable:
+    enabled: false
+  heating_circuit: 4
+
+- tag: 2_Legionela_MAX_CAS
+  id: legionella_max_time
+  name:
+    en: "legionella max duration"
+    si: "najdaljši čas protilegionelnega programa"
+  description: ""
+  type: "integer"
+  unit: "min"
+  adjustable:
+    enabled: false
+  heating_circuit: 4
+
+## Alarms (read only)
+
+- tag: 2_JE_ALARM
+  id: alarm_active
+  name:
+    en: "alarm active"
+    si: "alarm aktiven"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Alarm_skupna_napaka
+  id: alarm_common_fault
+  name:
+    en: "alarm common fault"
+    si: "alarm skupna napaka"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Alarm_ni_pretoka
+  id: alarm_no_flow
+  name:
+    en: "alarm no flow"
+    si: "alarm ni pretoka"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Alarm_pretocno_stikalo
+  id: alarm_flow_switch
+  name:
+    en: "alarm flow switch"
+    si: "alarm pretočno stikalo"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Alarm_prenizka_temp_TC
+  id: alarm_hp_temp_low
+  name:
+    en: "alarm heat pump temperature too low"
+    si: "alarm prenizka temperatura TČ"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Alarm_Talno
+  id: alarm_floor
+  name:
+    en: "alarm floor heating"
+    si: "alarm talno"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Alarm_Talno_VF2
+  id: alarm_floor_vf2
+  name:
+    en: "alarm floor heating VF2"
+    si: "alarm talno VF2"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Alarm_RF1
+  id: alarm_rf1
+  name:
+    en: "alarm room sensor 1"
+    si: "alarm prostorski senzor 1"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Alarm_RF2
+  id: alarm_rf2
+  name:
+    en: "alarm room sensor 2"
+    si: "alarm prostorski senzor 2"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Alarm_RF3
+  id: alarm_rf3
+  name:
+    en: "alarm room sensor 3"
+    si: "alarm prostorski senzor 3"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Vrsta_alarma
+  id: alarm_type
+  name:
+    en: "alarm type"
+    si: "vrsta alarma"
+  description: ""
+  type: "integer"
+  unit: ""
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_NAPAKA
+  id: error_code
+  name:
+    en: "error code"
+    si: "napaka"
+  description: ""
+  type: "integer"
+  unit: ""
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+## Power and flow (read only)
+
+- tag: 2_Moc_TC
+  id: hp_power
+  name:
+    en: "heat pump power"
+    si: "moč toplotne črpalke"
+  description: ""
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Limita_moci_pri_OGR
+  id: power_limit_heating
+  name:
+    en: "power limit heating"
+    si: "limita moči pri ogrevanju"
+  description: ""
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Limita_moci_pri_SV
+  id: power_limit_water
+  name:
+    en: "power limit hot water"
+    si: "limita moči pri sanitarni vodi"
+  description: ""
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Limita_moci_pri_HLAJ
+  id: power_limit_cooling
+  name:
+    en: "power limit cooling"
+    si: "limita moči pri hlajenju"
+  description: ""
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Max_moc_TC_TISJA
+  id: max_power_silent
+  name:
+    en: "max power silent mode"
+    si: "največja moč v tihem delovanju"
+  description: ""
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Max_moc_TC_pri_ZALOG
+  id: max_power_buffer
+  name:
+    en: "max power buffer"
+    si: "največja moč pri zalogovniku"
+  description: ""
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Min_moc_TC_pri_SV
+  id: min_power_water
+  name:
+    en: "min power hot water"
+    si: "najmanjša moč pri sanitarni vodi"
+  description: ""
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_Min_moc_TC_pri_ZALOG
+  id: min_power_buffer
+  name:
+    en: "min power buffer"
+    si: "najmanjša moč pri zalogovniku"
+  description: ""
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_PV_Max_moc_TC
+  id: pv_max_power
+  name:
+    en: "pv max power"
+    si: "največja moč pri PV"
+  description: ""
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_PV_Max_moc_TC_HL
+  id: pv_max_power_cooling
+  name:
+    en: "pv max power cooling"
+    si: "največja moč pri PV hlajenje"
+  description: ""
+  type: "float"
+  unit: "%"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_I_Pretok
+  id: input_flow
+  name:
+    en: "flow input"
+    si: "vhod pretok"
+  description: ""
+  type: "integer"
+  unit: ""
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_I_Kompresor
+  id: input_compressor
+  name:
+    en: "compressor input"
+    si: "vhod kompresor"
+  description: ""
+  type: "integer"
+  unit: ""
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+## Operating hours (read only). Total = thousands * 1000 + units
+
+- tag: 2_URE_Komp_XXX000
+  id: compressor_hours_thousands
+  name:
+    en: "compressor operating hours thousands"
+    si: "ure delovanja kompresorja tisočice"
+  description: ""
+  type: "integer"
+  unit: ""
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_URE_Komp_000XXX
+  id: compressor_hours_units
+  name:
+    en: "compressor operating hours units"
+    si: "ure delovanja kompresorja enice"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_URE_EH_XXX000
+  id: heater_hours_thousands
+  name:
+    en: "electric heater operating hours thousands"
+    si: "ure delovanja električnega grelca tisočice"
+  description: ""
+  type: "integer"
+  unit: ""
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+- tag: 2_URE_EH_000XXX
+  id: heater_hours_units
+  name:
+    en: "electric heater operating hours units"
+    si: "ure delovanja električnega grelca enice"
+  description: ""
+  type: "integer"
+  unit: "h"
+  adjustable:
+    enabled: false
+  heating_circuit: 0
+
+## Holiday mode (pocitniski rezim)
+
+- tag: 2_POCITNISKI
+  id: holiday_turned_on
+  name:
+    en: "holiday mode"
+    si: "počitniški režim"
+  description: ""
+  type: "boolean"
+  adjustable:
+    enabled: true
+  heating_circuit: 0
+
+- tag: 2_Dan_pocitniski
+  id: holiday_day
+  name:
+    en: "holiday end day"
+    si: "počitnice do dan"
+  description: ""
+  type: "integer"
+  unit: ""
+  adjustable:
+    enabled: true
+    range:
+      min: 1
+      max: 31
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_Mesec_pocitniski
+  id: holiday_month
+  name:
+    en: "holiday end month"
+    si: "počitnice do mesec"
+  description: ""
+  type: "integer"
+  unit: ""
+  adjustable:
+    enabled: true
+    range:
+      min: 1
+      max: 12
+      step: 1
+  heating_circuit: 0
+
+- tag: 2_Leto_pocitniski
+  id: holiday_year
+  name:
+    en: "holiday end year"
+    si: "počitnice do leto"
+  description: "Dvomestno leto (25 = 2025)"
+  type: "integer"
+  unit: ""
+  adjustable:
+    enabled: true
+    range:
+      min: 0
+      max: 99
+      step: 1
+  heating_circuit: 0

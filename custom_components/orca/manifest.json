@@ -1,0 +1,16 @@
+{
+  "domain": "orca",
+  "name": "Orca",
+  "codeowners": ["@crapitouille"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/crapitouille/ha-orca",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/crapitouille/ha-orca/issues",
+  "requirements": [
+    "aiofiles>=25.1.0",
+    "pydantic>=2.0.6"
+  ],
+  "version": "2.5.1"
+}
