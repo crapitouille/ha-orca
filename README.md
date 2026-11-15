@@ -64,11 +64,25 @@ bord prêt à l'emploi, construit avec les seules cartes intégrées à Home Ass
 * une vue **Accueil** pour l'utilisateur final : état de la PAC en clair, thermostat du plancher,
   eau chaude sanitaire, mode vacances, graphique des dernières 24 heures, et un encadré d'alerte
   qui n'apparaît qu'en cas d'alarme ;
-* une vue **Technique** : fonctionnement, anti-légionelle, compteurs et programmes horaires.
+* une vue **Technique** : fonctionnement, anti-légionelle, compteurs et programmes horaires ;
+* une vue **Réglages** : courbe de chauffe, puissances maximales, appoint électrique, eau chaude ;
+* une vue **Programmes horaires** : les programmes 1 à 5, avec leurs trois plages et leurs sept jours.
+
+Tous les réglages exposés par l'intégration y sont modifiables ; un test automatisé le vérifie.
 
 Pour l'installer, créez un tableau de bord vide, ouvrez son *éditeur de configuration brute* et
 collez-y le contenu du fichier. Les identifiants d'entités sont ceux de Home Assistant 2026.11 avec
 les noms d'entités en anglais ; adaptez-les si les vôtres diffèrent.
+
+## Scénarios maison pour l'eau chaude
+
+Le fichier [`examples/scenarios-eau-chaude.yaml`](examples/scenarios-eau-chaude.yaml) ajoute un
+sélecteur **Économique / Confort / Vacances** qui règle les consignes d'eau chaude de la PAC,
+profite du surplus solaire en mode Économique et relance un cycle anti-légionelle en heure creuse
+au retour de vacances. Tous ses paramètres (seuils, durées, délais, options, choix des capteurs
+du compteur et des heures creuses) se règlent depuis le tableau de bord. Les cartes de réglage correspondantes sont dans
+[`examples/scenarios-eau-chaude-cartes.yaml`](examples/scenarios-eau-chaude-cartes.yaml). Le détail
+est dans [`examples/README.md`](examples/README.md).
 
 ## Prérequis
 
@@ -114,7 +128,7 @@ la détection se trompe.
 
 ## État de validation
 
-* **Tests automatisés** : 31 tests, sur Home Assistant 2026.2 et sur la version la plus récente,
+* **Tests automatisés** : 59 tests, sur Home Assistant 2026.2 et sur la version la plus récente,
   contre un simulateur qui rejoue des relevés réels de PAC Duo et Mono.
 * **En conditions réelles** : installée sur une PAC Orca (plancher chauffant et eau chaude sanitaire)
   avec Home Assistant 2026.11. La lecture de toutes les familles y est vérifiée.
@@ -145,6 +159,9 @@ pytest
 * `tests/fixtures/field_dump_*.txt` : relevés réels issus du dépôt d'origine.
 * `tests/fixtures/baseline_2.4.3.json` : ce que renvoyait l'intégration d'origine 2.4.3 pour chaque
   relevé. Les tests vérifient que les entités d'origine restent strictement identiques.
+* `tests/test_scenarios.py` : les scénarios maison de `examples/`, rejoués contre le simulateur.
+* `tests/test_dashboard.py` : chaque réglage de l'intégration et des scénarios est modifiable depuis
+  les tableaux de bord d'exemple, et chaque entité citée existe.
 
 ### Ajouter une variable
 

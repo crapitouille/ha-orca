@@ -7,6 +7,16 @@ Base : [Tomasinjo/orca-energy-ha](https://github.com/Tomasinjo/orca-energy-ha) 2
 - Eau chaude sanitaire : température du régime bas, appliquée en dehors du programme horaire
   (`2_Temp_vode_sanitarna_NIZJA`, réglable de 10 à 60 °C), et consigne en cours (`2_Temp_zelena_SV`).
 - Tableau de bord d'exemple : tuiles correspondantes dans la section « Eau chaude sanitaire ».
+- Exemple `examples/scenarios-eau-chaude.yaml` : scénarios maison Économique, Confort et Vacances
+  pour l'eau chaude (surplus solaire, anti-légionelle en heure creuse au retour de vacances),
+  avec 17 tests de régression (`tests/test_scenarios.py`), et ses cartes de réglage
+  (`examples/scenarios-eau-chaude-cartes.yaml`).
+- Scénarios : tous les paramètres sont réglables depuis le tableau de bord — injection minimale
+  pour prolonger le maintien, délai avant le cycle anti-légionelle, activation du surplus, coupure
+  de l'anti-légionelle en vacances, cycle au retour, choix du capteur du compteur (W ou kW, sens
+  de l'injection) et du capteur d'heures creuses.
+- Tableau de bord d'exemple : vues « Réglages » et « Programmes horaires ». Tous les réglages de
+  l'intégration y sont modifiables, ce que vérifie `tests/test_dashboard.py`.
 
 ## 2.5.1
 

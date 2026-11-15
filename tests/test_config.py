@@ -44,6 +44,6 @@ def test_dashboard_example_is_valid():
         (Path(__file__).parents[1] / "dashboards/pompe-a-chaleur.yaml").read_text(encoding="utf8")
     )
     cards = [c for v in dashboard["views"] for s in v["sections"] for c in s["cards"]]
-    assert {v["path"] for v in dashboard["views"]} == {"accueil", "technique"}
+    assert {v["path"] for v in dashboard["views"]} == {"accueil", "technique", "reglages", "programmes"}
     assert cards and all(not c["type"].startswith("custom:") for c in cards)
     assert all("entity" in c for c in cards if c["type"] == "tile")

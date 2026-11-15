@@ -1,0 +1,530 @@
+# Scénarios maison pour l'eau chaude sanitaire : Économique, Confort, Vacances.
+#
+# Paquet Home Assistant (« package ») : réglages, capteurs et automatisations.
+# Voir examples/README.md pour l'installation et le détail du fonctionnement, et
+# examples/scenarios-eau-chaude-cartes.yaml pour les cartes de réglage.
+#
+# Tous les réglages se font depuis le tableau de bord, y compris le choix des capteurs :
+#   * « Capteur de puissance réseau » : puissance au compteur, en W ou en kW ;
+#     par défaut négative quand la maison injecte (inversable) ;
+#   * « Capteur d'heures creuses » : entité « on » pendant les heures creuses
+#     (binary_sensor, calendar, schedule ou input_boolean).
+# Les entités orca_heat_pump_* sont celles de l'intégration Orca sous Home Assistant 2026.11.
+
+input_select:
+  ecs_scenario:
+    name: Scénario maison
+    icon: mdi:home-switch
+    options:
+      - Économique
+      - Confort
+      - Vacances
+
+input_number:
+  ecs_t_confort:
+    name: Eau chaude – Confort
+    icon: mdi:thermometer-water
+    min: 30
+    max: 60
+    step: 0.5
+    unit_of_measurement: "°C"
+  ecs_t_vacances:
+    name: Eau chaude – Vacances
+    icon: mdi:thermometer-water
+    min: 30
+    max: 60
+    step: 0.5
+    unit_of_measurement: "°C"
+  ecs_t_defaut:
+    name: Eau chaude – Économique
+    icon: mdi:thermometer-water
+    min: 30
+    max: 60
+    step: 0.5
+    unit_of_measurement: "°C"
+  ecs_t_surplus:
+    name: Eau chaude – Économique avec surplus solaire
+    icon: mdi:solar-power
+    min: 30
+    max: 60
+    step: 0.5
+    unit_of_measurement: "°C"
+  ecs_seuil_surplus_kw:
+    name: Seuil d'injection pour le surplus
+    icon: mdi:transmission-tower-export
+    min: 0.5
+    max: 10
+    step: 0.1
+    unit_of_measurement: kW
+  ecs_maintien_min:
+    name: Durée de maintien du surplus
+    icon: mdi:timer-outline
+    min: 5
+    max: 120
+    step: 5
+    unit_of_measurement: min
+  ecs_seuil_prolongation_kw:
+    name: Injection minimale pour prolonger pendant la chauffe
+    icon: mdi:timer-plus-outline
+    min: 0
+    max: 5
+    step: 0.1
+    unit_of_measurement: kW
+  ecs_legio_delai_min:
+    name: Délai avant le cycle anti-légionelle
+    icon: mdi:timer-sand
+    min: 1
+    max: 60
+    step: 1
+    unit_of_measurement: min
+
+input_boolean:
+  ecs_surplus_actif:
+    name: Surplus solaire en mode Économique
+    icon: mdi:solar-power
+  ecs_vacances_couper_legio:
+    name: Couper l'anti-légionelle pendant les vacances
+    icon: mdi:bacteria-outline
+  ecs_legio_apres_vacances:
+    name: Cycle anti-légionelle au retour de vacances
+    icon: mdi:bacteria-outline
+  ecs_reseau_injection_positive:
+    name: Capteur réseau positif en injection
+    icon: mdi:swap-vertical
+  ecs_legio_en_attente:
+    name: Anti-légionelle à lancer en heure creuse
+    icon: mdi:bacteria-outline
+
+# Mémoire des capteurs choisis ; on les change avec les listes « select » ci-dessous.
+input_text:
+  ecs_capteur_reseau:
+    name: Capteur de puissance réseau (valeur)
+    icon: mdi:transmission-tower
+  ecs_capteur_heures_creuses:
+    name: Capteur d'heures creuses (valeur)
+    icon: mdi:clock-outline
+
+timer:
+  ecs_maintien_surplus:
+    name: Maintien du surplus solaire
+    icon: mdi:timer-sand
+    restore: true
+
+template:
+  - select:
+      - name: Capteur de puissance réseau
+        unique_id: ecs_capteur_reseau_select
+        default_entity_id: select.ecs_capteur_reseau
+        icon: mdi:transmission-tower
+        state: "{{ states('input_text.ecs_capteur_reseau') }}"
+        options: >-
+          {% set l = states.sensor | selectattr('attributes.device_class', 'defined')
+             | selectattr('attributes.device_class', 'eq', 'power')
+             | rejectattr('entity_id', 'eq', 'sensor.injection_reseau')
+             | map(attribute='entity_id') | sort | list %}
+          {% set c = states('input_text.ecs_capteur_reseau') %}
+          {{ l if c in l or c in ['', 'unknown', 'unavailable'] else [c] + l }}
+        select_option:
+          - action: input_text.set_value
+            target:
+              entity_id: input_text.ecs_capteur_reseau
+            data:
+              value: "{{ option }}"
+      - name: Capteur d'heures creuses
+        unique_id: ecs_capteur_heures_creuses_select
+        default_entity_id: select.ecs_capteur_heures_creuses
+        icon: mdi:clock-outline
+        state: "{{ states('input_text.ecs_capteur_heures_creuses') }}"
+        options: >-
+          {% set l = (states.binary_sensor | list) + (states.calendar | list)
+             + (states.schedule | list) + (states.input_boolean | list) %}
+          {% set l = l | map(attribute='entity_id')
+             | reject('in', ['binary_sensor.ecs_heure_creuse', 'input_boolean.ecs_legio_en_attente'])
+             | reject('search', '^input_boolean\\.ecs_') | sort | list %}
+          {% set c = states('input_text.ecs_capteur_heures_creuses') %}
+          {{ l if c in l or c in ['', 'unknown', 'unavailable'] else [c] + l }}
+        select_option:
+          - action: input_text.set_value
+            target:
+              entity_id: input_text.ecs_capteur_heures_creuses
+            data:
+              value: "{{ option }}"
+    sensor:
+      - name: Injection réseau
+        unique_id: ecs_injection_reseau
+        icon: mdi:transmission-tower-export
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        state: >-
+          {% set s = states('input_text.ecs_capteur_reseau') %}
+          {% set p = states(s) | float(0) %}
+          {% set p = p if state_attr(s, 'unit_of_measurement') == 'kW' else p / 1000 %}
+          {{ (p if is_state('input_boolean.ecs_reseau_injection_positive', 'on') else 0 - p) | round(2) }}
+        availability: "{{ has_value(states('input_text.ecs_capteur_reseau')) }}"
+    binary_sensor:
+      - name: Heure creuse (eau chaude)
+        unique_id: ecs_heure_creuse
+        default_entity_id: binary_sensor.ecs_heure_creuse
+        icon: mdi:clock-outline
+        state: "{{ is_state(states('input_text.ecs_capteur_heures_creuses'), 'on') }}"
+        availability: "{{ has_value(states('input_text.ecs_capteur_heures_creuses')) }}"
+
+automation:
+  - id: ecs_scenario_appliquer
+    alias: Eau chaude – appliquer le scénario maison
+    description: >-
+      Applique à la pompe à chaleur Orca les consignes d'eau chaude du scénario choisi :
+      température pendant le programme horaire et température hors programme. En Vacances,
+      coupe le programme anti-légionelle de la PAC si l'option est active.
+    mode: queued
+    max: 5
+    triggers:
+      # Changement de scénario par l'utilisateur.
+      - trigger: state
+        entity_id: input_select.ecs_scenario
+        id: scenario
+      # Une consigne a été modifiée : on réapplique le scénario en cours.
+      - trigger: state
+        entity_id:
+          - input_number.ecs_t_confort
+          - input_number.ecs_t_vacances
+          - input_number.ecs_t_defaut
+        id: reglage
+    conditions:
+      - condition: state
+        entity_id: input_select.ecs_scenario
+        state:
+          - Économique
+          - Confort
+          - Vacances
+    actions:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.ecs_scenario
+                state: Confort
+            sequence:
+              - action: timer.cancel
+                target:
+                  entity_id: timer.ecs_maintien_surplus
+              - alias: Consigne pendant le programme horaire
+                action: water_heater.set_temperature
+                target:
+                  entity_id: water_heater.orca_heat_pump_water_heater
+                data:
+                  temperature: "{{ states('input_number.ecs_t_confort') | float }}"
+              - alias: Consigne hors programme
+                action: number.set_value
+                target:
+                  entity_id: number.orca_heat_pump_hot_water_reduced_temperature
+                data:
+                  value: "{{ states('input_number.ecs_t_confort') | float }}"
+          - conditions:
+              - condition: state
+                entity_id: input_select.ecs_scenario
+                state: Vacances
+            sequence:
+              - action: timer.cancel
+                target:
+                  entity_id: timer.ecs_maintien_surplus
+              - action: input_boolean.turn_off
+                target:
+                  entity_id: input_boolean.ecs_legio_en_attente
+              - action: water_heater.set_temperature
+                target:
+                  entity_id: water_heater.orca_heat_pump_water_heater
+                data:
+                  temperature: "{{ states('input_number.ecs_t_vacances') | float }}"
+              - action: number.set_value
+                target:
+                  entity_id: number.orca_heat_pump_hot_water_reduced_temperature
+                data:
+                  value: "{{ states('input_number.ecs_t_vacances') | float }}"
+              - if:
+                  - condition: trigger
+                    id: scenario
+                  - condition: state
+                    entity_id: input_boolean.ecs_vacances_couper_legio
+                    state: "on"
+                then:
+                  - alias: Pas de cycle anti-légionelle pendant l'absence
+                    action: switch.turn_off
+                    target:
+                      entity_id: switch.orca_heat_pump_legionella_programme
+          - conditions:
+              - condition: state
+                entity_id: input_select.ecs_scenario
+                state: Économique
+            sequence:
+              - action: number.set_value
+                target:
+                  entity_id: number.orca_heat_pump_hot_water_reduced_temperature
+                data:
+                  value: "{{ states('input_number.ecs_t_defaut') | float }}"
+              - choose:
+                  - alias: Il y a déjà assez d'injection – consigne haute tout de suite
+                    conditions:
+                      - condition: state
+                        entity_id: input_boolean.ecs_surplus_actif
+                        state: "on"
+                      - condition: numeric_state
+                        entity_id: sensor.injection_reseau
+                        above: input_number.ecs_seuil_surplus_kw
+                    sequence:
+                      - action: water_heater.set_temperature
+                        target:
+                          entity_id: water_heater.orca_heat_pump_water_heater
+                        data:
+                          temperature: "{{ states('input_number.ecs_t_surplus') | float }}"
+                      - action: timer.start
+                        target:
+                          entity_id: timer.ecs_maintien_surplus
+                        data:
+                          duration: "{{ states('input_number.ecs_maintien_min') | int * 60 }}"
+                  # Pendant un maintien de surplus, la consigne haute reste en place.
+                  - conditions:
+                      - condition: state
+                        entity_id: timer.ecs_maintien_surplus
+                        state: idle
+                    sequence:
+                      - action: water_heater.set_temperature
+                        target:
+                          entity_id: water_heater.orca_heat_pump_water_heater
+                        data:
+                          temperature: "{{ states('input_number.ecs_t_defaut') | float }}"
+
+  - id: ecs_surplus_solaire
+    alias: Eau chaude – surplus solaire (mode Économique)
+    description: >-
+      En scénario Économique, si le surplus solaire est activé, quand l'injection dans le
+      réseau dépasse le seuil réglé, passe la consigne d'eau chaude du programme horaire à
+      la température « surplus » et la maintient pendant la durée réglée. À la fin du
+      maintien, la consigne haute est prolongée tant que l'injection dépasse le seuil, ou
+      tant que la PAC produit de l'eau chaude et que l'injection reste au-dessus de
+      l'injection minimale de prolongation ; sinon la consigne revient à la valeur par défaut.
+    mode: queued
+    max: 5
+    triggers:
+      # L'injection passe au-dessus du seuil.
+      - trigger: numeric_state
+        entity_id: sensor.injection_reseau
+        above: input_number.ecs_seuil_surplus_kw
+        id: surplus
+      # Fin de la durée de maintien.
+      - trigger: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.ecs_maintien_surplus
+        id: fin
+      # La température de surplus a été modifiée.
+      - trigger: state
+        entity_id: input_number.ecs_t_surplus
+        id: reglage
+      # Le surplus solaire est activé ou désactivé.
+      - trigger: state
+        entity_id: input_boolean.ecs_surplus_actif
+        to: "on"
+        id: surplus
+      - trigger: state
+        entity_id: input_boolean.ecs_surplus_actif
+        to: "off"
+        id: desactive
+    conditions:
+      - condition: state
+        entity_id: input_select.ecs_scenario
+        state: Économique
+    actions:
+      - choose:
+          - conditions:
+              - condition: trigger
+                id: surplus
+              - condition: state
+                entity_id: input_boolean.ecs_surplus_actif
+                state: "on"
+              - condition: numeric_state
+                entity_id: sensor.injection_reseau
+                above: input_number.ecs_seuil_surplus_kw
+            sequence:
+              - action: water_heater.set_temperature
+                target:
+                  entity_id: water_heater.orca_heat_pump_water_heater
+                data:
+                  temperature: "{{ states('input_number.ecs_t_surplus') | float }}"
+              - action: timer.start
+                target:
+                  entity_id: timer.ecs_maintien_surplus
+                data:
+                  duration: "{{ states('input_number.ecs_maintien_min') | int * 60 }}"
+          - conditions:
+              - condition: trigger
+                id: fin
+            sequence:
+              - choose:
+                  - conditions:
+                      - condition: state
+                        entity_id: input_boolean.ecs_surplus_actif
+                        state: "on"
+                      - condition: or
+                        conditions:
+                          - condition: numeric_state
+                            entity_id: sensor.injection_reseau
+                            above: input_number.ecs_seuil_surplus_kw
+                          - condition: and
+                            conditions:
+                              - condition: state
+                                entity_id: sensor.orca_heat_pump_position_of_3_way_valve
+                                state: hot_water
+                              - condition: numeric_state
+                                entity_id: sensor.injection_reseau
+                                above: input_number.ecs_seuil_prolongation_kw
+                    sequence:
+                      - alias: Encore du surplus – on prolonge le maintien
+                        action: timer.start
+                        target:
+                          entity_id: timer.ecs_maintien_surplus
+                        data:
+                          duration: "{{ states('input_number.ecs_maintien_min') | int * 60 }}"
+                default:
+                  - alias: Plus de surplus – retour à la consigne par défaut
+                    action: water_heater.set_temperature
+                    target:
+                      entity_id: water_heater.orca_heat_pump_water_heater
+                    data:
+                      temperature: "{{ states('input_number.ecs_t_defaut') | float }}"
+          - conditions:
+              - condition: trigger
+                id: desactive
+              - condition: state
+                entity_id: timer.ecs_maintien_surplus
+                state: active
+            sequence:
+              - alias: Surplus désactivé pendant un maintien – retour à la consigne par défaut
+                action: timer.cancel
+                target:
+                  entity_id: timer.ecs_maintien_surplus
+              - action: water_heater.set_temperature
+                target:
+                  entity_id: water_heater.orca_heat_pump_water_heater
+                data:
+                  temperature: "{{ states('input_number.ecs_t_defaut') | float }}"
+          - conditions:
+              - condition: trigger
+                id: reglage
+              - condition: state
+                entity_id: timer.ecs_maintien_surplus
+                state: active
+            sequence:
+              - action: water_heater.set_temperature
+                target:
+                  entity_id: water_heater.orca_heat_pump_water_heater
+                data:
+                  temperature: "{{ states('input_number.ecs_t_surplus') | float }}"
+
+  - id: ecs_legio_apres_vacances
+    alias: Eau chaude – anti-légionelle après les vacances
+    description: >-
+      Quand le scénario quitte Vacances pour Économique ou Confort et que l'option est active,
+      mémorise qu'un cycle anti-légionelle est à faire. À la première heure creuse (tout de
+      suite si on y est déjà), réactive le programme anti-légionelle de la PAC et place son
+      jour et son heure après le délai réglé, pour que la PAC lance son cycle. Sans l'option,
+      le programme anti-légionelle coupé pendant les vacances est réactivé tel quel au retour.
+    mode: queued
+    max: 5
+    triggers:
+      # Fin des vacances.
+      - trigger: state
+        entity_id: input_select.ecs_scenario
+        from: Vacances
+        to:
+          - Économique
+          - Confort
+        id: retour
+      # Début d'une heure creuse.
+      - trigger: state
+        entity_id: binary_sensor.ecs_heure_creuse
+        to: "on"
+        id: heure_creuse
+      # Rattrapage si Home Assistant était arrêté au début de l'heure creuse.
+      - trigger: homeassistant
+        event: start
+        id: demarrage
+      # L'option est désactivée alors qu'un cycle est en attente.
+      - trigger: state
+        entity_id: input_boolean.ecs_legio_apres_vacances
+        to: "off"
+        id: option_off
+    conditions: []
+    actions:
+      - choose:
+          - conditions:
+              - condition: trigger
+                id: retour
+              - condition: state
+                entity_id: input_boolean.ecs_legio_apres_vacances
+                state: "on"
+            sequence:
+              - action: input_boolean.turn_on
+                target:
+                  entity_id: input_boolean.ecs_legio_en_attente
+          - conditions:
+              - condition: trigger
+                id: retour
+              - condition: state
+                entity_id: input_boolean.ecs_vacances_couper_legio
+                state: "on"
+            sequence:
+              - alias: Pas de cycle demandé – programme hebdomadaire réactivé tel quel
+                action: switch.turn_on
+                target:
+                  entity_id: switch.orca_heat_pump_legionella_programme
+          - conditions:
+              - condition: trigger
+                id: option_off
+              - condition: state
+                entity_id: input_boolean.ecs_legio_en_attente
+                state: "on"
+            sequence:
+              - action: input_boolean.turn_off
+                target:
+                  entity_id: input_boolean.ecs_legio_en_attente
+              - alias: Cycle annulé – programme hebdomadaire réactivé tel quel
+                action: switch.turn_on
+                target:
+                  entity_id: switch.orca_heat_pump_legionella_programme
+      - condition: state
+        entity_id: input_boolean.ecs_legio_en_attente
+        state: "on"
+      - condition: state
+        entity_id: binary_sensor.ecs_heure_creuse
+        state: "on"
+      - condition: state
+        entity_id: input_select.ecs_scenario
+        state:
+          - Économique
+          - Confort
+      - variables:
+          depart: >-
+            {{ (now() + timedelta(minutes=states('input_number.ecs_legio_delai_min') | int(10))).timestamp() }}
+      - alias: Jour de la semaine, 1 = lundi … 7 = dimanche
+        action: number.set_value
+        target:
+          entity_id: number.orca_heat_pump_legionella_start_day
+        data:
+          value: "{{ depart | timestamp_custom('%u', true) | int }}"
+      - action: number.set_value
+        target:
+          entity_id: number.orca_heat_pump_legionella_start_hour
+        data:
+          value: "{{ depart | timestamp_custom('%-H', true) | int }}"
+      - action: number.set_value
+        target:
+          entity_id: number.orca_heat_pump_legionella_start_minute
+        data:
+          value: "{{ depart | timestamp_custom('%-M', true) | int }}"
+      - action: switch.turn_on
+        target:
+          entity_id: switch.orca_heat_pump_legionella_programme
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.ecs_legio_en_attente

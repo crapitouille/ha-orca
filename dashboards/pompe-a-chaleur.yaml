@@ -1,7 +1,11 @@
 # Tableau de bord « Pompe à chaleur » pour l'intégration Orca (crapitouille/ha-orca).
 #
-# Deux vues : « Accueil » pour l'utilisateur final (état, chauffage, eau chaude,
-# absence, historique) et « Technique » (fonctionnement, anti-légionelle, compteurs).
+# Quatre vues :
+#   * « Accueil » pour l'utilisateur final (état, chauffage, eau chaude, absence, historique) ;
+#   * « Technique » (fonctionnement, anti-légionelle, compteurs) ;
+#   * « Réglages » (courbe de chauffe, puissances, appoint électrique, eau chaude) ;
+#   * « Programmes horaires » (programmes 1 à 5, trois plages et sept jours chacun).
+# Tous les réglages exposés par l'intégration y sont modifiables.
 # Il n'utilise que des cartes intégrées à Home Assistant.
 #
 # Installation :
@@ -357,3 +361,861 @@ views:
       icon: mdi:alert-circle-outline
       grid_options:
         columns: 6
+- title: Réglages
+  path: reglages
+  icon: mdi:tune-vertical
+  type: sections
+  max_columns: 3
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Courbe de chauffe du plancher
+      icon: mdi:chart-bell-curve-cumulative
+    - type: markdown
+      content: Ces réglages sont écrits **directement dans la pompe à chaleur**. Notez la valeur affichée avant
+        de la modifier.
+      grid_options:
+        columns: full
+    - type: entities
+      entities:
+      - entity: number.orca_heat_pump_floor_parallel_curve_shift
+        name: Décalage parallèle de la courbe
+      - entity: number.orca_heat_pump_floor_slope_curve_shift
+        name: Décalage de la pente
+      - entity: number.orca_heat_pump_floor_max_outlet_temperature_heating
+        name: Départ maximal en chauffage
+      - entity: number.orca_heat_pump_floor_min_outlet_temperature_heating
+        name: Départ minimal en chauffage
+      - entity: number.orca_heat_pump_floor_min_outlet_temperature_cooling
+        name: Départ minimal en rafraîchissement
+  - type: grid
+    cards:
+    - type: heading
+      heading: Puissance et appoint électrique
+      icon: mdi:speedometer
+    - type: entities
+      title: Puissance maximale du compresseur
+      entities:
+      - entity: number.orca_heat_pump_max_power_heating
+        name: En chauffage
+      - entity: number.orca_heat_pump_max_power_cooling
+        name: En rafraîchissement
+      - entity: number.orca_heat_pump_max_power_hot_water
+        name: Pour l'eau chaude
+    - type: entities
+      title: 'Appoint électrique : enclenché sous'
+      entities:
+      - entity: number.orca_heat_pump_electric_heater_level_1
+        name: Niveau 1 (température extérieure)
+      - entity: number.orca_heat_pump_electric_heater_level_2
+        name: Niveau 2 (température extérieure)
+      - entity: number.orca_heat_pump_electric_heater_level_3
+        name: Niveau 3 (température extérieure)
+  - type: grid
+    cards:
+    - type: heading
+      heading: Eau chaude sanitaire
+      icon: mdi:water-boiler
+    - type: tile
+      entity: water_heater.orca_heat_pump_water_heater
+      name: Consigne pendant le programme
+      icon: mdi:water-boiler
+      features:
+      - type: target-temperature
+      grid_options:
+        columns: full
+    - type: entities
+      entities:
+      - entity: number.orca_heat_pump_hot_water_reduced_temperature
+        name: Consigne hors programme
+      - entity: number.orca_heat_pump_hot_water_on_difference
+        name: Différentiel de relance
+      - entity: sensor.orca_heat_pump_hot_water_timer_programme
+        name: Programme horaire suivi
+- title: Programmes horaires
+  path: programmes
+  icon: mdi:calendar-clock
+  type: sections
+  max_columns: 3
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Programme 1
+      icon: mdi:calendar-clock
+    - type: markdown
+      content: '{% set t = ''program 1'' %}{% set u = [] %}{% if states(''sensor.orca_heat_pump_hot_water_timer_programme'')
+        == t %}{% set u = u + [''eau chaude''] %}{% endif %}{% if states(''sensor.orca_heat_pump_silent_mode_timer_programme'')
+        == t %}{% set u = u + [''mode silencieux''] %}{% endif %}{{ ''Utilisé par : **'' ~ u | join('', '') ~ ''**''
+        if u else ''Pas utilisé par l\''eau chaude ni par le mode silencieux.'' }}'
+      grid_options:
+        columns: full
+    - type: entities
+      title: Plage 1
+      entities:
+      - entity: number.orca_heat_pump_timer_1_period_1_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_1_period_1_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_1_period_1_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_1_period_1_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_1_period_1_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_1_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_1_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_1_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_1_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_1_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_1_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+    - type: entities
+      title: Plage 2
+      entities:
+      - entity: number.orca_heat_pump_timer_1_period_2_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_1_period_2_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_1_period_2_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_1_period_2_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_1_period_2_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_2_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_2_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_2_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_2_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_2_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_2_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+    - type: entities
+      title: Plage 3
+      entities:
+      - entity: number.orca_heat_pump_timer_1_period_3_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_1_period_3_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_1_period_3_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_1_period_3_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_1_period_3_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_3_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_3_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_3_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_3_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_3_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_1_period_3_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+  - type: grid
+    cards:
+    - type: heading
+      heading: Programme 2
+      icon: mdi:calendar-clock
+    - type: markdown
+      content: '{% set t = ''program 2'' %}{% set u = [] %}{% if states(''sensor.orca_heat_pump_hot_water_timer_programme'')
+        == t %}{% set u = u + [''eau chaude''] %}{% endif %}{% if states(''sensor.orca_heat_pump_silent_mode_timer_programme'')
+        == t %}{% set u = u + [''mode silencieux''] %}{% endif %}{{ ''Utilisé par : **'' ~ u | join('', '') ~ ''**''
+        if u else ''Pas utilisé par l\''eau chaude ni par le mode silencieux.'' }}'
+      grid_options:
+        columns: full
+    - type: entities
+      title: Plage 1
+      entities:
+      - entity: number.orca_heat_pump_timer_2_period_1_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_2_period_1_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_2_period_1_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_2_period_1_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_2_period_1_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_1_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_1_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_1_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_1_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_1_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_1_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+    - type: entities
+      title: Plage 2
+      entities:
+      - entity: number.orca_heat_pump_timer_2_period_2_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_2_period_2_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_2_period_2_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_2_period_2_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_2_period_2_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_2_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_2_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_2_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_2_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_2_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_2_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+    - type: entities
+      title: Plage 3
+      entities:
+      - entity: number.orca_heat_pump_timer_2_period_3_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_2_period_3_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_2_period_3_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_2_period_3_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_2_period_3_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_3_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_3_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_3_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_3_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_3_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_2_period_3_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+  - type: grid
+    cards:
+    - type: heading
+      heading: Programme 3
+      icon: mdi:calendar-clock
+    - type: markdown
+      content: '{% set t = ''program 3'' %}{% set u = [] %}{% if states(''sensor.orca_heat_pump_hot_water_timer_programme'')
+        == t %}{% set u = u + [''eau chaude''] %}{% endif %}{% if states(''sensor.orca_heat_pump_silent_mode_timer_programme'')
+        == t %}{% set u = u + [''mode silencieux''] %}{% endif %}{{ ''Utilisé par : **'' ~ u | join('', '') ~ ''**''
+        if u else ''Pas utilisé par l\''eau chaude ni par le mode silencieux.'' }}'
+      grid_options:
+        columns: full
+    - type: entities
+      title: Plage 1
+      entities:
+      - entity: number.orca_heat_pump_timer_3_period_1_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_3_period_1_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_3_period_1_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_3_period_1_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_3_period_1_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_1_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_1_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_1_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_1_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_1_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_1_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+    - type: entities
+      title: Plage 2
+      entities:
+      - entity: number.orca_heat_pump_timer_3_period_2_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_3_period_2_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_3_period_2_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_3_period_2_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_3_period_2_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_2_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_2_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_2_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_2_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_2_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_2_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+    - type: entities
+      title: Plage 3
+      entities:
+      - entity: number.orca_heat_pump_timer_3_period_3_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_3_period_3_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_3_period_3_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_3_period_3_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_3_period_3_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_3_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_3_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_3_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_3_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_3_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_3_period_3_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+  - type: grid
+    cards:
+    - type: heading
+      heading: Programme 4
+      icon: mdi:calendar-clock
+    - type: markdown
+      content: '{% set t = ''program 4'' %}{% set u = [] %}{% if states(''sensor.orca_heat_pump_hot_water_timer_programme'')
+        == t %}{% set u = u + [''eau chaude''] %}{% endif %}{% if states(''sensor.orca_heat_pump_silent_mode_timer_programme'')
+        == t %}{% set u = u + [''mode silencieux''] %}{% endif %}{{ ''Utilisé par : **'' ~ u | join('', '') ~ ''**''
+        if u else ''Pas utilisé par l\''eau chaude ni par le mode silencieux.'' }}'
+      grid_options:
+        columns: full
+    - type: entities
+      title: Plage 1
+      entities:
+      - entity: number.orca_heat_pump_timer_4_period_1_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_4_period_1_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_4_period_1_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_4_period_1_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_4_period_1_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_1_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_1_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_1_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_1_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_1_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_1_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+    - type: entities
+      title: Plage 2
+      entities:
+      - entity: number.orca_heat_pump_timer_4_period_2_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_4_period_2_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_4_period_2_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_4_period_2_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_4_period_2_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_2_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_2_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_2_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_2_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_2_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_2_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+    - type: entities
+      title: Plage 3
+      entities:
+      - entity: number.orca_heat_pump_timer_4_period_3_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_4_period_3_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_4_period_3_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_4_period_3_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_4_period_3_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_3_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_3_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_3_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_3_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_3_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_4_period_3_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+  - type: grid
+    cards:
+    - type: heading
+      heading: Programme 5
+      icon: mdi:calendar-clock
+    - type: markdown
+      content: '{% set t = ''program 5'' %}{% set u = [] %}{% if states(''sensor.orca_heat_pump_hot_water_timer_programme'')
+        == t %}{% set u = u + [''eau chaude''] %}{% endif %}{% if states(''sensor.orca_heat_pump_silent_mode_timer_programme'')
+        == t %}{% set u = u + [''mode silencieux''] %}{% endif %}{{ ''Utilisé par : **'' ~ u | join('', '') ~ ''**''
+        if u else ''Pas utilisé par l\''eau chaude ni par le mode silencieux.'' }}'
+      grid_options:
+        columns: full
+    - type: entities
+      title: Plage 1
+      entities:
+      - entity: number.orca_heat_pump_timer_5_period_1_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_5_period_1_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_5_period_1_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_5_period_1_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_5_period_1_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_1_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_1_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_1_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_1_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_1_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_1_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+    - type: entities
+      title: Plage 2
+      entities:
+      - entity: number.orca_heat_pump_timer_5_period_2_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_5_period_2_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_5_period_2_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_5_period_2_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_5_period_2_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_2_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_2_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_2_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_2_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_2_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_2_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+    - type: entities
+      title: Plage 3
+      entities:
+      - entity: number.orca_heat_pump_timer_5_period_3_on_hour
+        name: Début – heure
+      - entity: number.orca_heat_pump_timer_5_period_3_on_minute
+        name: Début – minute
+      - entity: number.orca_heat_pump_timer_5_period_3_off_hour
+        name: Fin – heure
+      - entity: number.orca_heat_pump_timer_5_period_3_off_minute
+        name: Fin – minute
+      - type: buttons
+        entities:
+        - entity: switch.orca_heat_pump_timer_5_period_3_monday
+          name: L
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_3_tuesday
+          name: Ma
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_3_wednesday
+          name: Me
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_3_thursday
+          name: J
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_3_friday
+          name: V
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_3_saturday
+          name: S
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle
+        - entity: switch.orca_heat_pump_timer_5_period_3_sunday
+          name: D
+          icon: mdi:calendar-today
+          tap_action:
+            action: toggle

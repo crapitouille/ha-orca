@@ -1,0 +1,87 @@
+# Cartes de réglage des scénarios maison (examples/scenarios-eau-chaude.yaml).
+#
+# À coller dans une section d'un tableau de bord en vue « sections » : menu ⋮ de la
+# section > Modifier en YAML, puis remplacer la liste « cards ». Tous les réglages du
+# paquet y sont modifiables, y compris le choix des capteurs, ainsi que le programme
+# anti-légionelle de la PAC.
+- type: heading
+  heading: Pompe à chaleur
+  icon: mdi:heat-pump
+- type: entities
+  title: Scénario maison
+  entities:
+  - entity: input_select.ecs_scenario
+    name: Scénario
+  - entity: timer.ecs_maintien_surplus
+    name: Maintien du surplus en cours
+- type: entities
+  title: Consignes Confort / Vacances
+  entities:
+  - entity: input_number.ecs_t_confort
+    name: Confort (pendant et hors programme)
+  - entity: input_number.ecs_t_vacances
+    name: Vacances (pendant et hors programme)
+- type: entities
+  title: Mode Économique et surplus solaire
+  entities:
+  - entity: input_number.ecs_t_defaut
+    name: Consigne par défaut
+  - type: divider
+  - entity: input_boolean.ecs_surplus_actif
+    name: Profiter du surplus solaire
+  - entity: input_number.ecs_t_surplus
+    name: Consigne avec surplus solaire
+  - entity: input_number.ecs_seuil_surplus_kw
+    name: Seuil d'injection
+  - entity: input_number.ecs_maintien_min
+    name: Durée de maintien
+  - entity: input_number.ecs_seuil_prolongation_kw
+    name: Injection minimale pour prolonger pendant la chauffe
+  - entity: sensor.injection_reseau
+    name: Injection actuelle
+- type: entities
+  title: Vacances et anti-légionelle
+  entities:
+  - entity: input_boolean.ecs_vacances_couper_legio
+    name: Couper l'anti-légionelle pendant les vacances
+  - entity: input_boolean.ecs_legio_apres_vacances
+    name: Cycle anti-légionelle au retour, en heure creuse
+  - entity: input_number.ecs_legio_delai_min
+    name: Délai avant le cycle
+  - entity: input_boolean.ecs_legio_en_attente
+    name: Cycle prévu à la prochaine heure creuse
+  - entity: binary_sensor.ecs_heure_creuse
+    name: Heure creuse en cours
+- type: entities
+  title: Anti-légionelle (programme de la PAC)
+  entities:
+  - entity: switch.orca_heat_pump_legionella_programme
+    name: Programme anti-légionelle
+  - entity: number.orca_heat_pump_legionella_temperature
+    name: Température
+  - entity: number.orca_heat_pump_legionella_start_day
+    name: Jour (1 = lundi … 7 = dimanche)
+  - entity: number.orca_heat_pump_legionella_start_hour
+    name: Heure
+  - entity: number.orca_heat_pump_legionella_start_minute
+    name: Minute
+  - entity: sensor.orca_heat_pump_legionella_cycle
+    name: Cycle
+- type: entities
+  title: Capteurs utilisés
+  entities:
+  - entity: select.ecs_capteur_reseau
+    name: Puissance au compteur
+  - entity: input_boolean.ecs_reseau_injection_positive
+    name: Le compteur est positif en injection
+  - entity: select.ecs_capteur_heures_creuses
+    name: Heures creuses
+- type: button
+  name: Tous les réglages de la pompe à chaleur
+  icon: mdi:tune-vertical
+  tap_action:
+    action: navigate
+    navigation_path: /pompe-chaleur/reglages
+  grid_options:
+    columns: full
+    rows: 1
