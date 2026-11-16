@@ -41,7 +41,7 @@ class OrcaWaterHeater(OrcaEntity, WaterHeaterEntity):
 
     _attr_temperature_unit = UnitOfTemperature.CELSIUS
     _attr_min_temp = 25.0
-    _attr_max_temp = 60.0
+    _attr_max_temp = 55.0
     _attr_supported_features = (
         WaterHeaterEntityFeature.TARGET_TEMPERATURE | WaterHeaterEntityFeature.AWAY_MODE
     )
@@ -50,6 +50,12 @@ class OrcaWaterHeater(OrcaEntity, WaterHeaterEntity):
     def __init__(self, coordinator: OrcaDataUpdateCoordinator, unique_id: str) -> None:
         """Initialize."""
         super().__init__(coordinator, unique_id)
+
+        # setpoint limits as defined for the desired temperature in config.yml
+        desired = coordinator.data.get("wh_desired_temp")
+        if desired is not None and desired.config.adjustable.range.max > 0:
+            self._attr_min_temp = desired.config.adjustable.range.min
+            self._attr_max_temp = desired.config.adjustable.range.max
 
         if coordinator.config_entry.data.get(CONF_LANGUAGE, LANG_EN) == LANG_SI:
             self._attr_name = "Bojler"

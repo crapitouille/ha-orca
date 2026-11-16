@@ -33,7 +33,7 @@ def platform_of(cfg) -> str:
         return "switch" if cfg.adjustable.enabled else "binary_sensor"
     if cfg.type in ("float", "integer"):
         return "number" if cfg.adjustable.enabled else "sensor"
-    return "none" if cfg.adjustable.enabled else "sensor"
+    return "select" if cfg.adjustable.enabled else "sensor"
 
 
 def api_snapshot(values) -> dict[str, dict]:

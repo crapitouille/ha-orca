@@ -25,28 +25,28 @@ input_number:
     name: Eau chaude – Confort
     icon: mdi:thermometer-water
     min: 30
-    max: 60
+    max: 55
     step: 0.5
     unit_of_measurement: "°C"
   ecs_t_vacances:
     name: Eau chaude – Vacances
     icon: mdi:thermometer-water
     min: 30
-    max: 60
+    max: 55
     step: 0.5
     unit_of_measurement: "°C"
   ecs_t_defaut:
     name: Eau chaude – Économique
     icon: mdi:thermometer-water
     min: 30
-    max: 60
+    max: 55
     step: 0.5
     unit_of_measurement: "°C"
   ecs_t_surplus:
     name: Eau chaude – Économique avec surplus solaire
     icon: mdi:solar-power
     min: 30
-    max: 60
+    max: 55
     step: 0.5
     unit_of_measurement: "°C"
   ecs_seuil_surplus_kw:

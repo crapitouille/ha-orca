@@ -18,7 +18,7 @@ DASHBOARD = yaml.safe_load((ROOT / "dashboards/pompe-a-chaleur.yaml").read_text(
 SCENARIO_CARDS = yaml.safe_load((ROOT / "examples/scenarios-eau-chaude-cartes.yaml").read_text(encoding="utf8"))
 PACKAGE = yaml.safe_load((ROOT / "examples/scenarios-eau-chaude.yaml").read_text(encoding="utf8"))
 
-ADJUSTABLE_DOMAINS = ("number", "switch", "climate", "water_heater")
+ADJUSTABLE_DOMAINS = ("number", "select", "switch", "climate", "water_heater")
 TILE_CONTROLS = {"numeric-input", "toggle", "target-temperature", "climate-hvac-modes", "select-options"}
 PREFIX = "orca_heat_pump_"   # device name prefix, added by Home Assistant 2026.10 and later
 

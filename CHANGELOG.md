@@ -2,6 +2,15 @@
 
 Base : [Tomasinjo/orca-energy-ha](https://github.com/Tomasinjo/orca-energy-ha) 2.4.3.
 
+## 2.5.3
+
+- Eau chaude : les consignes (pendant et hors programme) sont limitées à 55 °C, comme sur l'écran
+  de la PAC, au lieu de 60 °C.
+- Anti-légionelle : la fréquence du programme (`2_Legionela_Cikel`) devient réglable, sous forme de
+  liste : chaque semaine, toutes les 2 semaines, chaque mois, tous les 2 mois (manuel d'utilisation,
+  chapitre 4.2). L'entité `sensor.…_legionella_cycle` est remplacée par `select.…_legionella_cycle`.
+- Exemples et tableau de bord adaptés ; tests correspondants.
+
 ## 2.5.2
 
 - Eau chaude sanitaire : température du régime bas, appliquée en dehors du programme horaire

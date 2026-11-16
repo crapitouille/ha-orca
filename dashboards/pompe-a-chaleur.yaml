@@ -313,11 +313,13 @@ views:
       grid_options:
         columns: 6
     - type: tile
-      entity: sensor.orca_heat_pump_legionella_cycle
-      name: Cycle
+      entity: select.orca_heat_pump_legionella_cycle
+      name: Fréquence
       icon: mdi:repeat
+      features:
+      - type: select-options
       grid_options:
-        columns: 6
+        columns: full
     - type: tile
       entity: sensor.orca_heat_pump_legionella_max_duration
       name: Durée maximale

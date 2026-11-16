@@ -8,11 +8,11 @@ la PAC : celle du programme horaire et celle appliquée en dehors du programme.
 | Scénario | Pendant le programme | Hors programme | Anti-légionelle de la PAC |
 |---|---|---|---|
 | Confort | 55 °C | 55 °C | inchangé |
-| Économique | 45 °C, ou 56 °C s'il y a du surplus solaire | 45 °C | inchangé |
+| Économique | 45 °C, ou 55 °C s'il y a du surplus solaire | 45 °C | inchangé |
 | Vacances | 42 °C | 42 °C | coupé (option) |
 
 **Surplus solaire, en Économique.** Quand l'injection dans le réseau dépasse le seuil (2 kW),
-la consigne du programme passe à 56 °C pour une durée de maintien (20 min). À la fin du
+la consigne du programme passe à 55 °C pour une durée de maintien (20 min). À la fin du
 maintien :
 
 * l'injection dépasse encore le seuil : le maintien repart ;
@@ -39,7 +39,7 @@ Tout se règle depuis le tableau de bord (cartes `scenarios-eau-chaude-cartes.ya
 | Scénario | `input_select.ecs_scenario` | — |
 | Consigne Confort, Vacances, Économique | `input_number.ecs_t_confort`, `ecs_t_vacances`, `ecs_t_defaut` | 55, 42, 45 °C |
 | Profiter du surplus solaire | `input_boolean.ecs_surplus_actif` | activé |
-| Consigne avec surplus | `input_number.ecs_t_surplus` | 56 °C |
+| Consigne avec surplus | `input_number.ecs_t_surplus` | 55 °C |
 | Seuil d'injection | `input_number.ecs_seuil_surplus_kw` | 2 kW |
 | Durée de maintien | `input_number.ecs_maintien_min` | 20 min |
 | Injection minimale pour prolonger pendant la chauffe | `input_number.ecs_seuil_prolongation_kw` | 0 kW |

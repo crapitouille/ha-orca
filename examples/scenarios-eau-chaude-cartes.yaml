@@ -65,8 +65,8 @@
     name: Heure
   - entity: number.orca_heat_pump_legionella_start_minute
     name: Minute
-  - entity: sensor.orca_heat_pump_legionella_cycle
-    name: Cycle
+  - entity: select.orca_heat_pump_legionella_cycle
+    name: Fréquence
 - type: entities
   title: Capteurs utilisés
   entities:

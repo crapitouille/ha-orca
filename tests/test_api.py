@@ -27,8 +27,12 @@ async def test_original_entities_unchanged(pac_factory, name):
 
     assert api.available_circuits == reference["circuits"]
     assert set(reference["api"]) <= set(snap)
-    changed = {k for k, v in reference["api"].items() if snap[k] != v}
+    changed = {k: (v, snap[k]) for k, v in reference["api"].items() if snap[k] != v}
+    # The only intended difference with 2.4.3: the hot water setpoint is limited to 55 °C (2.5.3).
+    desired = changed.pop("wh_desired_temp")
     assert not changed
+    differing = {key for key in desired[0] if desired[0][key] != desired[1][key]}
+    assert len(differing) == 1 and "55.0" in str(desired[1]) and "60.0" in str(desired[0])
 
     original_tags = {v["tag"] for v in reference["api"].values()}
     added = {k: v for k, v in snap.items() if k not in reference["api"]}
@@ -116,7 +120,7 @@ async def test_hot_water_reduced_temperature(pac_factory):
     assert snap["wh_active_setpoint"]["value"] == 44.5 and snap["wh_active_setpoint"]["platform"] == "sensor"
     await api.set_value_by_id("wh_reduced_temp", 40)
     assert pac.writes == [("2_Temp_vode_sanitarna_NIZJA", "400")]
-    for bad in (9.9, 60.5):
+    for bad in (9.9, 55.5):
         with pytest.raises(ValueError):
             await api.set_value_by_id("wh_reduced_temp", bad)
     with pytest.raises(ValueError):

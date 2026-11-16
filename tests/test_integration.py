@@ -87,7 +87,7 @@ async def test_added_families(hass, pac_factory):
     assert inv["holiday_turned_on"]["domain"] == "switch"
     assert inv["wh_timer_programme"]["domain"] == "sensor" and inv["wh_timer_programme"]["state"] == "24h"
     assert inv["wh_reduced_temp"]["domain"] == "number" and float(inv["wh_reduced_temp"]["state"]) == 15.0
-    assert (inv["wh_reduced_temp"]["attributes"]["min"], inv["wh_reduced_temp"]["attributes"]["max"]) == (10, 60)
+    assert (inv["wh_reduced_temp"]["attributes"]["min"], inv["wh_reduced_temp"]["attributes"]["max"]) == (10, 55)
     assert inv["wh_active_setpoint"]["domain"] == "sensor" and float(inv["wh_active_setpoint"]["state"]) == 44.5
 
     call = hass.services.async_call
@@ -193,3 +193,50 @@ async def test_climate(hass, pac_factory, caplog, name):
     await _refresh(hass, entry)
     assert hass.states.get(climate).state == "cool"
     assert hass.states.get(climate).attributes["hvac_modes"] == ["off", "cool"]
+
+
+async def test_hot_water_limits(hass, pac_factory):
+    """The hot water setpoints are limited to 55 °C, as on the heat pump screen."""
+    pac, entry = await _setup(hass, pac_factory, scenarios()["duo"])
+    inv = _inventory(hass, entry)
+    water_heater = next(e["entity_id"] for e in inv.values() if e["domain"] == "water_heater")
+    attributes = hass.states.get(water_heater).attributes
+    assert (attributes["min_temp"], attributes["max_temp"]) == (25.0, 55.0)
+
+    call = hass.services.async_call
+    pac.writes.clear()
+    await call("water_heater", "set_temperature", {"entity_id": water_heater, "temperature": 55}, blocking=True)
+    assert pac.writes == [("2_Temp_vode_sanitarna", "550")]
+    for service, data in (
+        ("water_heater", {"entity_id": water_heater, "temperature": 56}),
+        ("number", {"entity_id": inv["wh_reduced_temp"]["entity_id"], "value": 55.5}),
+    ):
+        with pytest.raises(Exception):
+            await call(service, "set_temperature" if service == "water_heater" else "set_value", data, blocking=True)
+    assert len(pac.writes) == 1
+
+
+@pytest.mark.parametrize(("name", "raw", "option"), [("duo", "1", "weekly"), ("mono", "4", "every 2 months")])
+async def test_legionella_cycle(hass, pac_factory, name, raw, option):
+    """How often the anti-legionella programme runs: a choice, as in the user manual."""
+    values = scenarios()[name]
+    assert values["2_Legionela_Cikel"] == raw
+    pac, entry = await _setup(hass, pac_factory, values)
+    cycle = _inventory(hass, entry)["legionella_cycle"]
+    assert cycle["domain"] == "select" and cycle["state"] == option
+    assert cycle["attributes"]["options"] == ["weekly", "every 2 weeks", "monthly", "every 2 months"]
+
+    call = hass.services.async_call
+    pac.writes.clear()
+    await call("select", "select_option", {"entity_id": cycle["entity_id"], "option": "monthly"}, blocking=True)
+    assert pac.writes == [("2_Legionela_Cikel", "3")]
+    await _refresh(hass, entry)
+    assert hass.states.get(cycle["entity_id"]).state == "monthly"
+    with pytest.raises(Exception):
+        await call("select", "select_option", {"entity_id": cycle["entity_id"], "option": "daily"}, blocking=True)
+    assert len(pac.writes) == 1
+
+    # a value the manual does not describe is not shown as a wrong choice
+    pac.values["2_Legionela_Cikel"] = "9"
+    await _refresh(hass, entry)
+    assert hass.states.get(cycle["entity_id"]).state == "unavailable"

@@ -30,7 +30,7 @@ courbe de chauffe, limites de puissance), plus :
 | Famille | Dans Home Assistant | Réglable |
 |---|---|---|
 | Programmes horaires 1 à 5, trois plages chacun | un interrupteur par jour, heure et minute de début et de fin, programme suivi par l'eau chaude et par le mode silencieux | oui |
-| Anti-légionelle | activation, température, jour, heure, minute, cycle, durée maximale | oui, sauf cycle et durée maximale |
+| Anti-légionelle | activation, température, jour, heure, minute, fréquence (chaque semaine, toutes les 2 semaines, chaque mois, tous les 2 mois), durée maximale | oui, sauf durée maximale |
 | Alarmes | alarme active, alarmes détaillées, type d'alarme, code d'erreur | non |
 | Puissance et débit | puissance de la PAC, limites et plafonds par mode, entrées débit et compresseur | non |
 | Heures de fonctionnement | compresseur et appoint électrique | non |
@@ -128,7 +128,7 @@ la détection se trompe.
 
 ## État de validation
 
-* **Tests automatisés** : 59 tests, sur Home Assistant 2026.2 et sur la version la plus récente,
+* **Tests automatisés** : 62 tests, sur Home Assistant 2026.2 et sur la version la plus récente,
   contre un simulateur qui rejoue des relevés réels de PAC Duo et Mono.
 * **En conditions réelles** : installée sur une PAC Orca (plancher chauffant et eau chaude sanitaire)
   avec Home Assistant 2026.11. La lecture de toutes les familles y est vérifiée.

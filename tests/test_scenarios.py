@@ -38,7 +38,7 @@ LEGIONELLA = "2_Legionela_vklop"
 VALVE = "2_Preklop_PV1"                     # 1 = the heat pump is producing hot water
 
 SETTINGS = {
-    "ecs_t_confort": 55, "ecs_t_vacances": 42, "ecs_t_defaut": 45, "ecs_t_surplus": 56,
+    "ecs_t_confort": 52, "ecs_t_vacances": 42, "ecs_t_defaut": 45, "ecs_t_surplus": 55,
     "ecs_seuil_surplus_kw": 2.0, "ecs_maintien_min": 20,
     "ecs_seuil_prolongation_kw": 0, "ecs_legio_delai_min": 10,
 }
@@ -140,7 +140,7 @@ async def house(hass, pac_factory):
     await hass.config.async_set_time_zone("Europe/Zurich")
     values = scenarios()["duo"]
     values.update({                      # as found on the reference installation
-        PROGRAMME: "550", REDUCED: "450", LEGIONELLA: "1",
+        PROGRAMME: "520", REDUCED: "450", LEGIONELLA: "1",
         "2_On_Dan_Legionella": "1", "2_On_Ura_Legionella": "14", "2_On_Min_Legionella": "0",
         VALVE: "0",
     })
@@ -196,7 +196,7 @@ async def test_package_entities(house):
 
 async def test_confort(house):
     await house.select("Confort")
-    assert house.writes() == [(PROGRAMME, "550"), (REDUCED, "550")]
+    assert house.writes() == [(PROGRAMME, "520"), (REDUCED, "520")]
 
     # export above the threshold: no effect outside the Économique scenario
     await house.grid_power(-3500)
@@ -238,7 +238,7 @@ async def test_economique_surplus_hold_and_return(house):
 
     await house.grid_power(-2500)
     assert float(house.state(INJECTION)) == 2.5
-    assert house.writes() == [(PROGRAMME, "560")]
+    assert house.writes() == [(PROGRAMME, "550")]
     assert house.state(TIMER) == "active"
     assert house.hass.states.get(TIMER).attributes["duration"] == "0:20:00"
 
@@ -260,7 +260,7 @@ async def test_economique_surplus_is_extended(house):
     await house.select("Économique")
     house.writes()
     await house.grid_power(-2500)
-    assert house.writes() == [(PROGRAMME, "560")]
+    assert house.writes() == [(PROGRAMME, "550")]
 
     # still above the threshold at the end of the hold: extended, nothing written
     await house.end_of_hold()
@@ -280,14 +280,14 @@ async def test_economique_surplus_is_extended(house):
 
     # a new surplus starts a new hold
     await house.grid_power(-2100)
-    assert house.writes() == [(PROGRAMME, "560")] and house.state(TIMER) == "active"
+    assert house.writes() == [(PROGRAMME, "550")] and house.state(TIMER) == "active"
 
     # the surplus setpoint is modified during a hold: applied at once
-    await house.call("input_number", "set_value", "input_number.ecs_t_surplus", value=58)
-    assert house.writes() == [(PROGRAMME, "580")]
+    await house.call("input_number", "set_value", "input_number.ecs_t_surplus", value=54)
+    assert house.writes() == [(PROGRAMME, "540")]
     # the default setpoint is modified while the house exports: the high setpoint is confirmed
     await house.call("input_number", "set_value", "input_number.ecs_t_defaut", value=44)
-    assert house.writes() == [(REDUCED, "440"), (PROGRAMME, "580")]
+    assert house.writes() == [(REDUCED, "440"), (PROGRAMME, "540")]
     # modified during a hold, without surplus: only the reduced setpoint follows
     await house.grid_power(400)
     await house.call("input_number", "set_value", "input_number.ecs_t_defaut", value=43.5)
@@ -299,7 +299,7 @@ async def test_economique_selected_while_exporting(house):
     house.writes()
     await house.grid_power(-3000)
     await house.select("Économique")
-    assert house.writes() == [(REDUCED, "450"), (PROGRAMME, "560")]
+    assert house.writes() == [(REDUCED, "450"), (PROGRAMME, "550")]
     assert house.state(TIMER) == "active"
 
 
@@ -312,7 +312,7 @@ async def test_leaving_economique_cancels_the_hold(house):
 
     await house.select("Confort")
     assert house.state(TIMER) == "idle"
-    assert house.writes() == [(PROGRAMME, "550"), (REDUCED, "550")]
+    assert house.writes() == [(PROGRAMME, "520"), (REDUCED, "520")]
     await house.end_of_hold()
     assert house.writes() == []
 
@@ -327,7 +327,7 @@ async def test_threshold_and_duration_settings(house):
     await house.grid_power(-2500)
     assert house.writes() == []
     await house.grid_power(-3100)
-    assert house.writes() == [(PROGRAMME, "560")]
+    assert house.writes() == [(PROGRAMME, "550")]
     assert house.hass.states.get(TIMER).attributes["duration"] == "0:45:00"
 
 
@@ -370,7 +370,7 @@ async def test_legionella_at_next_offpeak_after_holidays(house, freezer, back_to
 
     # back from holidays during peak hours: setpoints at once, the cycle waits
     await house.select(back_to)
-    setpoints = [(PROGRAMME, "550"), (REDUCED, "550")] if back_to == "Confort" else [(REDUCED, "450"), (PROGRAMME, "450")]
+    setpoints = [(PROGRAMME, "520"), (REDUCED, "520")] if back_to == "Confort" else [(REDUCED, "450"), (PROGRAMME, "450")]
     assert house.writes() == setpoints
     assert house.state(PENDING) == "on"
 
@@ -394,7 +394,7 @@ async def test_legionella_at_once_when_back_during_offpeak(house, freezer):
     freezer.move_to(datetime(2026, 11, 18, 2, 15, tzinfo=ZoneInfo("Europe/Zurich")))
     await house.select("Confort")
     writes = house.writes()
-    assert sorted(writes) == sorted([(PROGRAMME, "550"), (REDUCED, "550")] + _legionella_writes(3, 2, 25))
+    assert sorted(writes) == sorted([(PROGRAMME, "520"), (REDUCED, "520")] + _legionella_writes(3, 2, 25))
     # whatever the interleaving of the two automations, the legionella writes keep their order
     assert [w for w in writes if w[0] not in (PROGRAMME, REDUCED)] == _legionella_writes(3, 2, 25)
     assert house.state(PENDING) == "off"
@@ -469,7 +469,7 @@ async def test_surplus_can_be_disabled(house):
 
     # enabled again while exporting: the hold starts at once
     await house.call("input_boolean", "turn_on", "input_boolean.ecs_surplus_actif")
-    assert house.writes() == [(PROGRAMME, "560")] and house.state(TIMER) == "active"
+    assert house.writes() == [(PROGRAMME, "550")] and house.state(TIMER) == "active"
 
     # disabled during a hold: back to the default setpoint
     await house.call("input_boolean", "turn_off", "input_boolean.ecs_surplus_actif")
